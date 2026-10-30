@@ -1,9 +1,13 @@
 
 import Button from "./components/ui/Button";
 import Container from "./components/ui/Container";
+import Navbar from "./components/layout/Navbar";
 
 export default function Home() {
   return (
+    <>
+    <Navbar/>
+
     <main>
       <section className="section-padding">
         <Container>
@@ -37,5 +41,6 @@ export default function Home() {
         </Container>
       </section>
     </main>
+        </>
   );
 }
