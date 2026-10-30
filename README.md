@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Foodies Hub
+
+A restaurant demo website currently under development. The project is being built section by section, with the goal of creating a clean, modern restaurant website experience.
+
+> **Status:** Work in Progress — features and documentation will be updated as development continues.
+
+## Overview
+
+Foodies Hub is a frontend restaurant website project built to practise and demonstrate modern web development. The interface and functionality are being developed incrementally, so this README will evolve alongside the project.
+
+## Tech Stack
+
+- **Next.js 16** — React framework
+- **React 19** — UI library
+- **TypeScript** — type-safe JavaScript
+- **Tailwind CSS 4** — styling
+- **Framer Motion** — animations
+- **Lucide React** — icons
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (LTS recommended)
+- npm (or another compatible package manager)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone https://github.com/syedfurqanullah/foodies-hub-restaurant.git
+   ```
 
-## Learn More
+2. Move into the project directory:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   cd foodies-hub-restaurant
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Install dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+4. Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Available Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the local development server |
+| `npm run build` | Build the application for production |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint |
+
+## Project Progress
+
+Development is ongoing. This section will be updated as each website section or feature is implemented and verified.
+
+- [ ] Website sections and layout
+- [ ] Responsive design
+- [ ] Interactive elements and animations
+- [ ] Final testing and production build
+
+*Checklist items will be marked complete only after the corresponding work is implemented.*
+
+## Project Structure
+
+The application uses the Next.js App Router inside the `src/app` directory. The structure may expand as reusable components and additional sections are introduced.
+
+## Contributing
+
+This is a personal demo project currently under active development. Suggestions and feedback are welcome.
+
+## License
+
+No license has been added yet. All rights are reserved by the repository owner unless a license is added.
