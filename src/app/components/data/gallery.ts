@@ -3,51 +3,49 @@ export interface GalleryImage {
   id: string;
   image: string;
   alt: string;
-  category: "Food" | "Restaurant" | "Dining";
+  category: "Food";
 }
 
 export const galleryImages: GalleryImage[] = [
   {
     id: "gallery-1",
-    image: "/images/gallery/restaurant-interior.jpg",
-    alt: "Elegant restaurant interior",
-    category: "Restaurant",
+    image: "/images/categories/burger.png",
+    alt: "Burger selection",
+    category: "Food",
   },
   {
     id: "gallery-2",
-    image: "/images/gallery/burger.jpg",
-    alt: "Freshly prepared burger",
+    image: "/images/menu/classic-burger.jpg",
+    alt: "Classic beef burger",
     category: "Food",
   },
   {
     id: "gallery-3",
-    image: "/images/gallery/pizza.jpg",
-    alt: "Freshly baked pizza",
+    image: "/images/menu/loaded-pizza.jpg",
+    alt: "Loaded pizza",
     category: "Food",
   },
   {
     id: "gallery-4",
-    image: "/images/gallery/dining.jpg",
-    alt: "Restaurant dining experience",
-    category: "Dining",
+    image: "/images/menu/creamy-pasta.jpg",
+    alt: "Creamy pasta",
+    category: "Food",
   },
   {
     id: "gallery-5",
-    image: "/images/gallery/dessert.jpg",
-    alt: "Delicious dessert",
+    image: "/images/categories/desserts.jpg",
+    alt: "Dessert selection",
     category: "Food",
   },
   {
     id: "gallery-6",
-    image: "/images/gallery/restaurant.jpg",
-    alt: "Restaurant atmosphere",
-    category: "Restaurant",
+    image: "/images/menu/bbq-platter.jpg",
+    alt: "Barbecue platter",
+    category: "Food",
   },
 ];
 
 export const galleryCategories = [
   "All",
   "Food",
-  "Restaurant",
-  "Dining",
 ] as const;

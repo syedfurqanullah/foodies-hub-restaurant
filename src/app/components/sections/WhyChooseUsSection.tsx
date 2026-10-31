@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 
 import Container from "../ui/Container";
+import Reveal from "../ui/Reveal";
 
 const features = [
   {
@@ -15,32 +16,32 @@ const features = [
     icon: Leaf,
   },
   {
-    title: "Expert Chefs",
+    title: "Thoughtful Preparation",
     description:
-      "Our chefs prepare every dish with care, passion, and attention to detail.",
+      "A considered approach to preparation, flavor, and presentation.",
     icon: ChefHat,
   },
   {
-    title: "Quick Service",
+    title: "Easy Ordering",
     description:
-      "Enjoy a smooth ordering experience and food prepared with care.",
+      "A clear, convenient path from browsing the menu to placing an order.",
     icon: Clock,
   },
   {
-    title: "Made with Love",
+    title: "Made for Sharing",
     description:
-      "Every meal is made to deliver a memorable food experience.",
+      "A welcoming menu concept for everyday meals and time together.",
     icon: Heart,
   },
 ];
 
 export default function WhyChooseUsSection() {
   return (
-    <section className="section-padding bg-[#100F0D] text-[#F5F0E8]">
+    <section className="section-padding bg-[#171713] text-[#F5F0E8]">
       <Container>
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.2em] text-[#E87532]">
-            Why Foodies Hub
+          <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.22em] text-[#B89A62]">
+            Sample experience pillars
           </span>
 
           <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl">
@@ -48,32 +49,39 @@ export default function WhyChooseUsSection() {
           </h2>
 
           <p className="mt-5 text-sm leading-7 text-[#A8A29A] sm:text-base">
-            From fresh ingredients to thoughtful preparation,
-            we focus on making every meal worth enjoying.
+            Example brand messaging for this restaurant concept, ready to tailor
+            around the restaurant&apos;s verified strengths and service.
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature) => {
+          {features.map((feature, index) => {
             const Icon = feature.icon;
 
             return (
-              <div
-                key={feature.title}
-                className="group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#E87532]/50 hover:bg-white/[0.06]"
-              >
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-[#E87532]/10 text-[#E87532] transition-colors duration-300 group-hover:bg-[#E87532] group-hover:text-white">
-                  <Icon size={27} strokeWidth={1.7} />
+              <Reveal key={feature.title} delay={index * 0.05}>
+                <div
+                  data-card-3d
+                  className="group relative h-full overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.045] to-white/[0.015] p-6 transition-all duration-300 hover:border-[#B89A62]/45 sm:p-7"
+                >
+                  <div className="mb-7 flex items-center justify-between">
+                    <span className="flex size-12 items-center justify-center rounded-xl border border-[#B89A62]/20 bg-[#B89A62]/10 text-[#B89A62] transition-colors duration-300 group-hover:bg-[#B89A62] group-hover:text-[#171713]">
+                      <Icon size={23} strokeWidth={1.7} aria-hidden="true" />
+                    </span>
+                    <span className="font-display text-sm tracking-[0.16em] text-white/25">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <h3 className="mb-3 text-lg font-semibold leading-snug sm:text-xl">
+                    {feature.title}
+                  </h3>
+
+                  <p className="text-sm leading-7 text-[#A8A29A]">
+                    {feature.description}
+                  </p>
                 </div>
-
-                <h3 className="mb-3 text-xl font-semibold">
-                  {feature.title}
-                </h3>
-
-                <p className="text-sm leading-7 text-[#A8A29A]">
-                  {feature.description}
-                </p>
-              </div>
+              </Reveal>
             );
           })}
         </div>

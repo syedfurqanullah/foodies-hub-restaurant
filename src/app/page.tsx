@@ -1,6 +1,6 @@
 
-import Navbar from "./components/layout/Navbar";
 import HeroSection from "./components/sections/HeroSection";
+import HomeDetailsSection from "./components/sections/HomeDetailsSection";
 import CategoriesSection from "./components/sections/CategoriesSection";
 import PopularDishesSection from "./components/sections/PopularDishesSection";
 import DealsSection from "./components/sections/DealsSection";
@@ -11,10 +11,9 @@ import WhatsAppButton from "./components/ui/WhatsAppButton";
 export default function Home() {
   return (
     <>
-      <Navbar />
-
       <main>
         <HeroSection />
+        <HomeDetailsSection />
         <CategoriesSection />
         <PopularDishesSection />
         <DealsSection />

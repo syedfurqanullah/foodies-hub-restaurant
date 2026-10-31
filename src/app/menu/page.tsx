@@ -1,21 +1,22 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   ShoppingBag,
+  ShoppingCart,
   Search,
   Check,
   X,
 } from "lucide-react";
 
-import Navbar from "@/app/components/layout/Navbar";
 import Container from "@/app/components/ui/Container";
 import { popularDishes } from "../components/data/popularDishes";
 import { useCart } from "../components/context/CartContext";
+import Reveal from "../components/ui/Reveal";
 
 const menuCategories = [
   "All",
@@ -26,13 +27,50 @@ const menuCategories = [
   "Desserts",
   "Drinks",
 ];
+const dietaryFilters = [
+  "All",
+  ...new Set(popularDishes.flatMap((dish) => dish.dietaryTags ?? [])),
+];
 
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [activeDietaryTag, setActiveDietaryTag] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [addedDishId, setAddedDishId] = useState<string | null>(null);
+  const [highlightedDishId, setHighlightedDishId] = useState<string | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { addToCart, cartCount } = useCart();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedCategory = params.get("category");
+    const category = menuCategories.find(
+      (item) => item.toLowerCase() === requestedCategory?.toLowerCase()
+    );
+    const query = params.get("q");
+    const itemId = params.get("item");
+
+    if (params.get("focus") === "search" || query) {
+      window.requestAnimationFrame(() => searchInputRef.current?.focus());
+    }
+
+    window.setTimeout(() => {
+      if (category) setActiveCategory(category);
+      if (query) setSearchQuery(query);
+    }, 0);
+
+    if (itemId && popularDishes.some((dish) => dish.id === itemId)) {
+      window.setTimeout(() => {
+        setHighlightedDishId(itemId);
+        document.getElementById(`dish-${itemId}`)?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 0);
+      window.setTimeout(() => setHighlightedDishId(null), 2400);
+    }
+  }, []);
 
   const filteredDishes = useMemo(() => {
     const searchTerm = searchQuery.trim().toLowerCase();
@@ -42,14 +80,20 @@ export default function MenuPage() {
         activeCategory === "All" ||
         dish.category.toLowerCase() === activeCategory.toLowerCase();
 
+      const matchesDietary =
+        activeDietaryTag === "All" ||
+        dish.dietaryTags?.includes(activeDietaryTag) === true;
+
       const matchesSearch =
         dish.name.toLowerCase().includes(searchTerm) ||
         dish.description.toLowerCase().includes(searchTerm) ||
-        dish.category.toLowerCase().includes(searchTerm);
+        dish.category.toLowerCase().includes(searchTerm) ||
+        (dish.dietaryTags ?? []).some((tag) => tag.toLowerCase().includes(searchTerm)) ||
+        (dish.allergens ?? []).some((allergen) => allergen.toLowerCase().includes(searchTerm));
 
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesDietary && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, activeDietaryTag, searchQuery]);
 
   const handleAddToCart = (dish: (typeof popularDishes)[number]) => {
     addToCart(dish);
@@ -64,17 +108,19 @@ export default function MenuPage() {
 
   const resetFilters = () => {
     setActiveCategory("All");
+    setActiveDietaryTag("All");
     setSearchQuery("");
   };
 
+  const hasActiveFilters =
+    activeCategory !== "All" || activeDietaryTag !== "All" || Boolean(searchQuery.trim());
+
   return (
     <>
-      <Navbar />
-
-      <main className="min-h-screen bg-[#100F0D] text-white">
+      <main className="min-h-screen bg-[#171713] text-white">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-white/10 bg-[#171512] py-20 sm:py-28">
-          <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#E87532]/10 blur-3xl" />
+        <section className="relative overflow-hidden border-b border-white/10 bg-[#171713] py-20 sm:py-28">
+          <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#B89A62]/10 blur-3xl" />
 
           <Container size="wide">
             <div className="relative">
@@ -82,7 +128,7 @@ export default function MenuPage() {
                 Freshly Prepared
               </span>
 
-              <h1 className="section-heading mt-5 text-5xl sm:text-6xl lg:text-7xl">
+              <h1 className="section-heading mt-5 text-[clamp(2.25rem,9vw,3.75rem)] sm:text-6xl lg:text-7xl">
                 Explore Our{" "}
                 <span className="text-brand-accent">Menu.</span>
               </h1>
@@ -107,7 +153,7 @@ export default function MenuPage() {
                 >
                   <ShoppingBag size={18} className="text-brand-accent" />
                   View Cart
-                  <span className="rounded-full bg-brand-accent px-2 py-0.5 text-xs text-white">
+                  <span className="rounded-full bg-brand-accent px-2 py-0.5 text-xs text-[#171713]">
                     {cartCount}
                   </span>
                 </Link>
@@ -123,7 +169,7 @@ export default function MenuPage() {
             <div className="flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
               <div>
                 <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
-                  Our Selection
+                  Sample Menu and Prices
                 </span>
 
                 <h2 className="section-heading mt-3 text-3xl sm:text-4xl">
@@ -131,21 +177,34 @@ export default function MenuPage() {
                 </h2>
               </div>
 
-              <p className="text-sm text-white/50">
-                {filteredDishes.length}{" "}
-                {filteredDishes.length === 1 ? "dish" : "dishes"} available
-              </p>
+              <div className="flex items-center gap-4 text-sm">
+                <p aria-live="polite" className="text-white/50">
+                  {filteredDishes.length}{" "}
+                  {filteredDishes.length === 1 ? "dish" : "dishes"} found
+                </p>
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    onClick={resetFilters}
+                    className="min-h-11 font-semibold text-brand-accent underline-offset-4 hover:underline"
+                  >
+                    Clear filters
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Search Bar */}
             <div className="mt-10">
-              <div className="flex max-w-xl items-center gap-3 rounded-xl border border-white/10 bg-[#171512] px-4 py-3 transition focus-within:border-brand-accent">
+              <div className="flex max-w-xl items-center gap-3 rounded-xl border border-white/10 bg-[#171713] px-4 py-3 transition focus-within:border-brand-accent">
                 <Search
                   size={19}
                   className="shrink-0 text-brand-accent"
                 />
 
                 <input
+                  id="menu-search"
+                  ref={searchInputRef}
                   type="search"
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
@@ -159,7 +218,7 @@ export default function MenuPage() {
                     type="button"
                     onClick={() => setSearchQuery("")}
                     aria-label="Clear search"
-                    className="text-white/50 transition hover:text-brand-accent"
+                    className="flex h-11 w-11 items-center justify-center text-white/50 transition hover:text-brand-accent"
                   >
                     <X size={18} />
                   </button>
@@ -175,9 +234,9 @@ export default function MenuPage() {
                   type="button"
                   onClick={() => setActiveCategory(category)}
                   aria-pressed={activeCategory === category}
-                  className={`rounded-full border px-5 py-2.5 text-sm font-medium transition ${
+                  className={`min-h-11 rounded-full border px-5 py-3 text-sm font-medium transition ${
                     activeCategory === category
-                      ? "border-brand-accent bg-brand-accent text-white"
+                    ? "border-brand-accent bg-brand-accent text-[#171713]"
                       : "border-white/15 text-white/65 hover:border-brand-accent hover:text-white"
                   }`}
                 >
@@ -186,13 +245,42 @@ export default function MenuPage() {
               ))}
             </div>
 
+            {dietaryFilters.length > 1 ? (
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <span className="mr-1 text-xs font-semibold uppercase tracking-wider text-white/45">
+                  Dietary
+                </span>
+                {dietaryFilters.slice(1).map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => setActiveDietaryTag(activeDietaryTag === tag ? "All" : tag)}
+                    aria-pressed={activeDietaryTag === tag}
+                    className={`min-h-11 rounded-full border px-4 py-2 text-xs font-medium transition ${
+                      activeDietaryTag === tag
+                        ? "border-brand-accent bg-brand-accent text-[#171713]"
+                        : "border-white/15 text-white/60 hover:border-brand-accent hover:text-white"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-5 text-xs leading-5 text-white/40">
+                Dietary and allergen details will be shown once confirmed by the restaurant.
+              </p>
+            )}
+
             {/* Dish Cards */}
             {filteredDishes.length > 0 ? (
               <div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
-                {filteredDishes.map((dish) => (
+                {filteredDishes.map((dish, index) => (
+                  <Reveal key={dish.id} delay={index * 0.05}>
                   <article
-                    key={dish.id}
-                    className="group overflow-hidden rounded-2xl border border-white/10 bg-[#171512] transition duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
+                    data-card-3d
+                    id={`dish-${dish.id}`}
+                    className={`group overflow-hidden rounded-xl border bg-[#171713] transition duration-300 hover:border-brand-accent/50 ${highlightedDishId === dish.id ? "border-brand-accent ring-2 ring-brand-accent/40" : "border-white/10"}`}
                   >
                     {/* Dish Image */}
                     <div className="relative aspect-[4/3] overflow-hidden bg-[#211D19]">
@@ -205,7 +293,7 @@ export default function MenuPage() {
                       />
 
                       {dish.badge && (
-                        <span className="absolute left-4 top-4 rounded-full bg-brand-accent px-3 py-1 text-xs font-bold text-white">
+                        <span className="absolute left-4 top-4 rounded-full bg-brand-accent px-3 py-1 text-xs font-bold text-[#171713]">
                           {dish.badge}
                         </span>
                       )}
@@ -225,6 +313,14 @@ export default function MenuPage() {
                         {dish.description}
                       </p>
 
+                      {(dish.dietaryTags?.length || dish.allergens?.length) && (
+                        <p className="mt-3 text-xs leading-5 text-white/45">
+                          {dish.dietaryTags?.length ? `Dietary: ${dish.dietaryTags.join(", ")}` : null}
+                          {dish.dietaryTags?.length && dish.allergens?.length ? " · " : null}
+                          {dish.allergens?.length ? `Contains: ${dish.allergens.join(", ")}` : null}
+                        </p>
+                      )}
+
                       <div className="mt-5 flex items-center justify-between gap-3">
                         <span className="text-lg font-bold text-brand-accent">
                           Rs. {dish.price.toLocaleString("en-PK")}
@@ -233,10 +329,10 @@ export default function MenuPage() {
                         <button
                           type="button"
                           onClick={() => handleAddToCart(dish)}
-                          className={`inline-flex items-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold text-white transition ${
+                          className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition ${
                             addedDishId === dish.id
-                              ? "bg-green-700"
-                              : "bg-brand-accent hover:bg-orange-600"
+                              ? "bg-green-700 text-white"
+                              : "bg-brand-accent text-[#171713] hover:bg-amber-700"
                           }`}
                         >
                           {addedDishId === dish.id ? (
@@ -246,7 +342,7 @@ export default function MenuPage() {
                             </>
                           ) : (
                             <>
-                              <ShoppingBag size={15} />
+                              <ShoppingCart size={16} aria-hidden="true" />
                               Add to Cart
                             </>
                           )}
@@ -254,6 +350,7 @@ export default function MenuPage() {
                       </div>
                     </div>
                   </article>
+                  </Reveal>
                 ))}
               </div>
             ) : (
@@ -275,7 +372,7 @@ export default function MenuPage() {
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="mt-6 rounded-lg bg-brand-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
+                  className="mt-6 rounded-lg bg-brand-accent px-5 py-3 text-sm font-bold text-[#171713] transition hover:bg-amber-700"
                 >
                   View All Dishes
                 </button>

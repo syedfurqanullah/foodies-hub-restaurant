@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart, Leaf, ChefHat } from "lucide-react";
-import Navbar from "@/app/components/layout/Navbar";
 import Container from "@/app/components/ui/Container";
+import Reveal from "@/app/components/ui/Reveal";
 
 const values = [
   {
@@ -29,14 +29,12 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      <Navbar />
-
-      <main className="overflow-hidden bg-[#100F0D] text-white">
+      <main className="overflow-hidden bg-[#171713] text-white">
         {/* Hero */}
         <section className="relative border-b border-white/10 py-24 sm:py-32">
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(circle_at_80%_30%,rgba(232,117,50,0.16),transparent_35%)]"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_80%_30%,rgba(184,154,98,0.16),transparent_35%)]"
           />
 
           <Container size="wide" className="relative">
@@ -44,7 +42,7 @@ export default function AboutPage() {
               Our Story
             </span>
 
-            <h1 className="section-heading mt-6 max-w-3xl text-5xl leading-tight sm:text-6xl lg:text-7xl">
+            <h1 className="section-heading mt-6 max-w-3xl text-[clamp(2.25rem,9vw,3.75rem)] leading-tight sm:text-6xl lg:text-7xl">
               More Than Food.
               <span className="mt-2 block text-brand-accent">
                 It&apos;s an Experience.
@@ -58,7 +56,7 @@ export default function AboutPage() {
 
             <Link
               href="/menu"
-              className="mt-9 inline-flex items-center gap-3 rounded-xl bg-brand-accent px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-600"
+              className="mt-9 inline-flex items-center gap-3 rounded-xl bg-brand-accent px-6 py-4 text-sm font-bold text-[#171713] transition hover:bg-amber-700"
             >
               Explore Our Menu
               <ArrowRight size={18} />
@@ -71,10 +69,10 @@ export default function AboutPage() {
           <Container size="wide">
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
               <div className="relative">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-[#211D19]">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-[#211D19]">
                   <Image
-                    src="/images/gallery/restaurant-interior.jpg"
-                    alt="Foodies Hub restaurant atmosphere"
+                    src="/images/hero/hero.jpg"
+                    alt="Food prepared for the Foodies Hub menu"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -108,7 +106,7 @@ export default function AboutPage() {
         </section>
 
         {/* Values */}
-        <section className="border-y border-white/10 bg-[#171512] py-20 sm:py-24">
+        <section className="border-y border-white/10 bg-[#171713] py-20 sm:py-24">
           <Container size="wide">
             <div className="mx-auto max-w-2xl text-center">
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
@@ -126,13 +124,13 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {values.map((value) => {
+              {values.map((value, index) => {
                 const Icon = value.icon;
 
                 return (
+                  <Reveal key={value.title} delay={index * 0.06}>
                   <div
-                    key={value.title}
-                    className="rounded-2xl border border-white/10 bg-[#100F0D] p-8 transition duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
+                    className="rounded-xl border border-white/10 bg-[#171713] p-8 transition duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
                   >
                     <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
                       <Icon size={27} />
@@ -146,6 +144,7 @@ export default function AboutPage() {
                       {value.description}
                     </p>
                   </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -155,7 +154,7 @@ export default function AboutPage() {
         {/* CTA */}
         <section className="py-20 sm:py-24">
           <Container size="wide">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#292019] to-[#171512] px-6 py-14 text-center sm:px-12">
+            <div className="rounded-xl border border-white/10 bg-gradient-to-br from-[#292019] to-[#171713] px-6 py-14 text-center sm:px-12">
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
                 Discover Something Delicious
               </span>
@@ -170,7 +169,7 @@ export default function AboutPage() {
 
               <Link
                 href="/menu"
-                className="mt-8 inline-flex items-center gap-3 rounded-xl bg-brand-accent px-7 py-4 text-sm font-bold text-white transition hover:bg-orange-600"
+                className="mt-8 inline-flex items-center gap-3 rounded-xl bg-brand-accent px-7 py-4 text-sm font-bold text-[#171713] transition hover:bg-amber-700"
               >
                 View Our Menu
                 <ArrowRight size={18} />

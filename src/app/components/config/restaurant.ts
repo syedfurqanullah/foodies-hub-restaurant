@@ -2,26 +2,23 @@
 import type { RestaurantConfig } from "../types/restaurant";
 
 export const restaurantConfig: RestaurantConfig = {
+  demoMode: true,
   name: "Foodies Hub",
   tagline: "Good Food. Great Moments.",
   description:
-    "Discover delicious food, freshly prepared meals, and memorable dining experiences.",
+    "Explore the Foodies Hub restaurant website concept, with sample menu dishes, prices, and meal offers.",
 
-  logo: "/logo/foodies-hub-logo.svg",
-  heroImage: "/images/hero/restaurant-hero.jpg",
+  logo: "/logo/foodies-hub-logo.png",
+  heroImage: "/images/hero/hero.jpg",
+  socialPreviewImage: "/images/og/foodies-hub-preview.jpg",
 
   contact: {
-    phone: "+92 300 0000000",
-    whatsapp: "923000000000",
-    email: "hello@foodieshub.com",
-    address: "Your Restaurant Address, Karachi, Pakistan",
+    phone: "",
+    whatsapp: "",
+    email: "",
+    address: "",
   },
-
-  socialLinks: {
-    instagram: "https://instagram.com/",
-    facebook: "https://facebook.com/",
-    tiktok: "https://tiktok.com/",
-  },
+  deliveryFee: null,
 
   openingHours: [
     {
@@ -32,10 +29,10 @@ export const restaurantConfig: RestaurantConfig = {
   ],
 
   theme: {
-    primary: "#1C1C1C",
-    secondary: "#F5F0E8",
-    accent: "#E87532",
-    background: "#FAF9F6",
-    foreground: "#242424",
+    primary: "#171713",
+    secondary: "#F4EFE4",
+    accent: "#B89A62",
+    background: "#171713",
+    foreground: "#F4EFE4",
   },
 };

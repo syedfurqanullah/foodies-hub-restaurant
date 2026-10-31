@@ -1,10 +1,13 @@
 
+import { WHATSAPP_NUMBER } from "../config/whatsapp";
+import { restaurantConfig } from "../config/restaurant";
+
 export default function WhatsAppButton() {
-  const phoneNumber = "03196976917"; // Replace with actual WhatsApp number
+  if (restaurantConfig.demoMode || !WHATSAPP_NUMBER) return null;
 
   return (
     <a
-      href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
         "Hi Foodies Hub! I would like to know more."
       )}`}
       target="_blank"

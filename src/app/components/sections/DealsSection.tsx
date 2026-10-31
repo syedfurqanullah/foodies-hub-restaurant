@@ -5,16 +5,17 @@ import { ArrowUpRight, Tag } from "lucide-react";
 
 import Container from "../ui/Container";
 import { deals } from "../data/deals";
+import Reveal from "../ui/Reveal";
 
 export default function DealsSection() {
   return (
-    <section className="section-padding bg-[#171512]">
+    <section className="section-padding bg-[#171713]">
       <Container size="wide">
         {/* Section Heading */}
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.25em] text-brand-accent">
-              Special Offers
+              Sample Offers
             </span>
 
             <h2 className="section-heading text-3xl text-[#F4EFE5] sm:text-4xl lg:text-5xl">
@@ -37,10 +38,11 @@ export default function DealsSection() {
 
         {/* Deals Cards */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {deals.map((deal) => (
+          {deals.map((deal, index) => (
+            <Reveal key={deal.id} delay={index * 0.06}>
             <article
-              key={deal.id}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-[#211E1A] transition-all duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
+              data-card-3d
+              className="group overflow-hidden rounded-xl border border-white/10 bg-[#211E1A] transition-all duration-300 hover:border-brand-accent/50"
             >
               {/* Deal Image */}
               <div className="relative aspect-[16/10] overflow-hidden">
@@ -53,7 +55,7 @@ export default function DealsSection() {
                 />
 
                 {/* Discount Badge */}
-                <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-brand-accent px-3 py-2 text-xs font-bold text-white shadow-lg">
+                <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-brand-accent px-3 py-2 text-xs font-bold text-[#171713] shadow-lg">
                   <Tag size={13} />
                   {deal.badge}
                 </span>
@@ -83,7 +85,7 @@ export default function DealsSection() {
 
                   <Link
                     href={`/deals?deal=${deal.id}`}
-                    className="inline-flex items-center gap-2 rounded-button bg-brand-accent px-4 py-3 text-xs font-semibold text-white transition-colors hover:bg-orange-600"
+                    className="inline-flex items-center gap-2 rounded-button bg-brand-accent px-4 py-3 text-xs font-semibold text-[#171713] transition-colors hover:bg-amber-700"
                   >
                     Order Now
                     <ArrowUpRight size={16} />
@@ -91,6 +93,7 @@ export default function DealsSection() {
                 </div>
               </div>
             </article>
+            </Reveal>
           ))}
         </div>
       </Container>

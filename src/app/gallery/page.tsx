@@ -6,8 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 
-import Navbar from "@/app/components/layout/Navbar";
 import Container from "@/app/components/ui/Container";
+import Reveal from "@/app/components/ui/Reveal";
 import {
     galleryImages,
     galleryCategories,
@@ -25,14 +25,12 @@ export default function GalleryPage() {
 
     return (
         <>
-            <Navbar />
-
-            <main className="min-h-screen overflow-hidden bg-[#100d0a] text-[#F5F0E8]">
+            <main className="min-h-screen overflow-hidden bg-[#171713] text-[#F5F0E8]">
 
                 {/* Gallery Hero */}
                 <section className="relative flex min-h-[480px] items-center overflow-hidden border-b border-white/10 sm:min-h-[540px]">
 
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_75%_50%,rgba(232,117,50,0.13),transparent_55%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_75%_50%,rgba(184,154,98,0.13),transparent_55%)]" />
 
                     <div className="absolute -right-20 top-10 h-72 w-72 rounded-full border border-brand-accent/10 sm:h-96 sm:w-96" />
 
@@ -44,7 +42,7 @@ export default function GalleryPage() {
                                 Foodies Hub Experience
                             </span>
 
-                            <h1 className="section-heading mt-7 text-5xl leading-[1.08] sm:text-6xl lg:text-8xl">
+                            <h1 className="section-heading mt-7 text-[clamp(2.25rem,9vw,3.75rem)] leading-[1.08] sm:text-6xl lg:text-8xl">
                                 A Feast for
                                 <span className="block italic text-brand-accent">
                                     Your Eyes.
@@ -59,7 +57,7 @@ export default function GalleryPage() {
 
                             <a
                                 href="#gallery-collection"
-                                className="mt-9 inline-flex items-center gap-3 rounded-button bg-brand-accent px-7 py-4 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+                                className="mt-9 inline-flex items-center gap-3 rounded-button bg-brand-accent px-7 py-4 text-sm font-semibold text-[#171713] transition-all duration-300 hover:-translate-y-1 hover:bg-amber-700"
                             >
                                 Explore Collection
                                 <ArrowDown size={18} />
@@ -104,9 +102,10 @@ export default function GalleryPage() {
                                 <button
                                     key={category}
                                     onClick={() => setActiveCategory(category)}
-                                    className={`rounded-full border px-6 py-3 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                                    aria-pressed={activeCategory === category}
+                                    className={`min-h-11 rounded-full border px-5 py-3 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
                                         activeCategory === category
-                                            ? "border-brand-accent bg-brand-accent text-white"
+                                            ? "border-brand-accent bg-brand-accent text-[#171713]"
                                             : "border-white/15 bg-white/[0.02] text-white/60 hover:border-brand-accent hover:text-brand-accent"
                                     }`}
                                 >
@@ -119,11 +118,11 @@ export default function GalleryPage() {
                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
                             {filteredImages.map((item, index) => (
+                                <Reveal key={item.id} delay={index * 0.05}>
                                 <article
-                                    key={item.id}
-                                    className={`group relative isolate overflow-hidden rounded-2xl border border-white/10 bg-[#1b1814] ${
+                                    className={`group relative isolate overflow-hidden rounded-xl border border-white/10 bg-[#1b1814] ${
                                         index === 0
-                                            ? "sm:col-span-2 sm:aspect-[2/1] lg:col-span-2 lg:aspect-[2/1]"
+                                            ? "aspect-[4/3] sm:col-span-2 sm:aspect-[2/1] lg:col-span-2 lg:aspect-[2/1]"
                                             : "aspect-[4/3]"
                                     }`}
                                 >
@@ -155,6 +154,7 @@ export default function GalleryPage() {
 
                                     </div>
                                 </article>
+                                </Reveal>
                             ))}
 
                         </div>
@@ -170,7 +170,7 @@ export default function GalleryPage() {
                 </section>
 
                 {/* Bottom CTA */}
-                <section className="border-t border-white/10 bg-[#171512] py-16">
+                <section className="border-t border-white/10 bg-[#171713] py-16">
                     <Container size="wide">
                         <div className="flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
 
@@ -186,7 +186,7 @@ export default function GalleryPage() {
 
                             <Link
                                 href="/menu"
-                                className="inline-flex items-center gap-3 rounded-button bg-brand-accent px-7 py-4 text-sm font-semibold text-white transition-all hover:bg-orange-600"
+                                className="inline-flex items-center gap-3 rounded-button bg-brand-accent px-7 py-4 text-sm font-semibold text-[#171713] transition-all hover:bg-amber-700"
                             >
                                 Explore Menu
                                 <ArrowUpRight size={18} />

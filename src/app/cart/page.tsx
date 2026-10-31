@@ -4,10 +4,11 @@
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "../components/layout/Navbar";
 import Container from "../components/ui/Container";
 import { useCart } from "../components/context/CartContext";
 import { WHATSAPP_NUMBER } from "../components/config/whatsapp";
+import { restaurantConfig } from "../components/config/restaurant";
+import Reveal from "../components/ui/Reveal";
 
 import {
   ArrowLeft,
@@ -34,6 +35,10 @@ export default function CartPage() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({ name: "", phone: "", address: "" });
+  const [checkoutError, setCheckoutError] = useState("");
+  const deliveryFee = restaurantConfig.deliveryFee ?? null;
+  const estimatedTotal = cartTotal + (deliveryFee ?? 0);
 
   const formatPrice = (price: number) =>
     `Rs. ${price.toLocaleString("en-PK")}`;
@@ -42,6 +47,34 @@ export default function CartPage() {
     event.preventDefault();
 
     if (cartItems.length === 0) return;
+
+    const phoneDigits = customerPhone.replace(/\D/g, "");
+    const phoneCharactersValid = /^[+()\d\s-]+$/.test(customerPhone.trim());
+    const nextErrors = {
+      name: customerName.trim().length < 2 ? "Enter your name (at least 2 characters)." : "",
+      phone:
+        !phoneCharactersValid || phoneDigits.length < 7 || phoneDigits.length > 15
+          ? "Use a valid phone number with 7 to 15 digits."
+          : "",
+      address:
+        customerAddress.trim().length < 8
+          ? "Enter a complete delivery address, including area or city."
+          : "",
+    };
+    setFieldErrors(nextErrors);
+
+    const firstInvalidField = Object.entries(nextErrors).find(([, error]) => error)?.[0];
+    if (firstInvalidField) {
+      document.getElementById(`customer${firstInvalidField[0].toUpperCase()}${firstInvalidField.slice(1)}`)?.focus();
+      return;
+    }
+
+    if (!restaurantConfig.demoMode && !WHATSAPP_NUMBER) {
+      setCheckoutError("The restaurant WhatsApp number has not been configured yet.");
+      return;
+    }
+
+    setCheckoutError("");
 
     const orderItems = cartItems
       .map(
@@ -53,7 +86,7 @@ export default function CartPage() {
       .join("\n");
 
     const message = `
-*NEW ORDER - FOODIES HUB*
+*${restaurantConfig.demoMode ? "SAMPLE ORDER - CONCEPT PREVIEW, NOT A LIVE ORDER" : `NEW ORDER - ${restaurantConfig.name.toUpperCase()}`}*
 
 *Customer Details*
 Name: ${customerName}
@@ -65,11 +98,14 @@ ${orderItems}
 
 *Total Items:* ${cartCount}
 *Subtotal:* ${formatPrice(cartTotal)}
+*Delivery Fee:* ${deliveryFee === null ? "To be confirmed with the restaurant" : formatPrice(deliveryFee)}
+*Estimated Total:* ${deliveryFee === null ? `${formatPrice(cartTotal)} + delivery fee` : formatPrice(estimatedTotal)}
+*Payment:* Confirm with the restaurant before ordering.
 
 *Additional Instructions:*
 ${instructions.trim() || "None"}
 
-Please confirm my order. Thank you!
+${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a real order." : "Please confirm my order. Thank you!"}
     `.trim();
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -81,20 +117,18 @@ Please confirm my order. Thank you!
 
   return (
     <>
-      <Navbar />
-
       <main className="min-h-screen bg-[#1C1C1C] text-[#F5F0E8]">
         <section className="relative overflow-hidden border-b border-white/10 bg-[#222222]">
-          <div className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-[#E87532]/10 blur-[100px]" />
+          <div className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-[#B89A62]/10 blur-[100px]" />
 
           <Container size="wide">
             <div className="relative py-16 sm:py-20">
-              <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#E87532]">
+              <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#B89A62]">
                 <UtensilsCrossed size={15} />
                 Foodies Hub
               </div>
 
-              <h1 className="section-heading text-4xl text-[#F5F0E8] sm:text-5xl md:text-6xl">
+              <h1 className="section-heading text-[clamp(2rem,8vw,3.5rem)] text-[#F5F0E8] sm:text-5xl md:text-6xl">
                 Your Shopping Cart
               </h1>
 
@@ -104,7 +138,7 @@ Please confirm my order. Thank you!
               </p>
 
               <div className="mt-7 flex items-center gap-2 text-sm text-[#A49C91]">
-                <ShoppingBag size={17} className="text-[#E87532]" />
+                <ShoppingBag size={17} className="text-[#B89A62]" />
                 {isCartReady
                   ? `${cartCount} ${cartCount === 1 ? "item" : "items"} in your cart`
                   : "Loading your cart..."}
@@ -121,11 +155,11 @@ Please confirm my order. Thank you!
               </div>
             ) : cartItems.length === 0 ? (
               <div className="mx-auto max-w-2xl border border-white/10 bg-[#242424] px-6 py-16 text-center sm:px-12">
-                <div className="mx-auto mb-7 flex h-20 w-20 items-center justify-center rounded-full border border-[#E87532]/30 bg-[#E87532]/10">
-                  <ShoppingBag size={34} className="text-[#E87532]" />
+                <div className="mx-auto mb-7 flex h-20 w-20 items-center justify-center rounded-full border border-[#B89A62]/30 bg-[#B89A62]/10">
+                  <ShoppingBag size={34} className="text-[#B89A62]" />
                 </div>
 
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#E87532]">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#B89A62]">
                   Nothing selected yet
                 </p>
 
@@ -139,7 +173,7 @@ Please confirm my order. Thank you!
 
                 <Link
                   href="/menu"
-                  className="mt-9 inline-flex items-center gap-3 bg-[#E87532] px-7 py-4 text-sm font-semibold text-white transition hover:bg-[#CF6429]"
+                  className="mt-9 inline-flex items-center gap-3 bg-[#B89A62] px-7 py-4 text-sm font-semibold text-[#171713] transition hover:bg-[#9c7d48]"
                 >
                   Explore Our Menu
                   <ArrowRight size={17} />
@@ -169,12 +203,12 @@ Please confirm my order. Thank you!
                   </div>
 
                   <div className="space-y-4">
-                    {cartItems.map((item) => (
+                    {cartItems.map((item, index) => (
+                      <Reveal key={item.id} delay={index * 0.05}>
                       <article
-                        key={item.id}
-                        className="group flex flex-col gap-5 border border-white/10 bg-[#262626] p-4 transition hover:border-[#E87532]/40 sm:flex-row sm:items-center sm:p-5"
+                        className="group flex flex-col gap-5 border border-white/10 bg-[#262626] p-4 transition hover:border-[#B89A62]/40 sm:flex-row sm:items-center sm:p-5"
                       >
-                        <div className="relative h-52 w-full shrink-0 overflow-hidden bg-[#333333] sm:h-28 sm:w-32">
+                        <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-[#333333] sm:aspect-auto sm:h-28 sm:w-32">
                           <Image
                             src={item.image}
                             alt={item.name}
@@ -191,7 +225,7 @@ Please confirm my order. Thank you!
                           <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#A49C91]">
                             {item.description}
                           </p>
-                          <p className="mt-3 text-sm font-semibold text-[#E87532]">
+                          <p className="mt-3 text-sm font-semibold text-[#B89A62]">
                             {formatPrice(item.price)}{" "}
                             <span className="font-normal text-[#898176]">
                               / item
@@ -207,7 +241,7 @@ Please confirm my order. Thank you!
                                 updateQuantity(item.id, item.quantity - 1)
                               }
                               aria-label={`Decrease ${item.name} quantity`}
-                              className="flex h-9 w-9 items-center justify-center transition hover:bg-[#E87532]"
+                              className="flex h-11 w-11 items-center justify-center transition hover:bg-[#B89A62] hover:text-[#171713]"
                             >
                               <Minus size={14} />
                             </button>
@@ -222,7 +256,7 @@ Please confirm my order. Thank you!
                                 updateQuantity(item.id, item.quantity + 1)
                               }
                               aria-label={`Increase ${item.name} quantity`}
-                              className="flex h-9 w-9 items-center justify-center transition hover:bg-[#E87532]"
+                              className="flex h-11 w-11 items-center justify-center transition hover:bg-[#B89A62] hover:text-[#171713]"
                             >
                               <Plus size={14} />
                             </button>
@@ -237,19 +271,20 @@ Please confirm my order. Thank you!
                               type="button"
                               onClick={() => removeFromCart(item.id)}
                               aria-label={`Remove ${item.name}`}
-                              className="text-[#8F857A] transition hover:text-red-400"
+                              className="flex h-11 w-11 items-center justify-center text-[#8F857A] transition hover:text-red-400"
                             >
                               <Trash2 size={17} />
                             </button>
                           </div>
                         </div>
                       </article>
+                      </Reveal>
                     ))}
                   </div>
 
                   <Link
                     href="/menu"
-                    className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-[#D8CFC2] transition hover:text-[#E87532]"
+                    className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-[#D8CFC2] transition hover:text-[#B89A62]"
                   >
                     <ArrowLeft size={17} />
                     Continue Shopping
@@ -257,7 +292,7 @@ Please confirm my order. Thank you!
                 </section>
 
                 <aside className="border border-white/10 bg-[#262626] p-6 sm:p-8 lg:sticky lg:top-28">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#E87532]">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#B89A62]">
                     Your Order
                   </p>
 
@@ -266,36 +301,54 @@ Please confirm my order. Thank you!
                   </h2>
 
                   <div className="mt-8 space-y-5">
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between gap-4 text-sm">
                       <span className="text-[#A49C91]">
-                        Items ({cartCount})
+                        Food subtotal ({cartCount} items)
                       </span>
-                      <span>{formatPrice(cartTotal)}</span>
+                      <span className="font-medium">{formatPrice(cartTotal)}</span>
                     </div>
 
                     <div className="flex justify-between gap-4 text-sm">
                       <span className="text-[#A49C91]">
-                        Delivery Charges
+                        Delivery Fee
                       </span>
                       <span className="text-right text-xs text-[#B7B0A6]">
-                        Confirmed at checkout
+                        {deliveryFee === null ? "Confirm after area check" : formatPrice(deliveryFee)}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between gap-4 text-sm">
+                      <span className="text-[#A49C91]">Payment</span>
+                      <span className="text-right text-xs text-[#B7B0A6]">
+                        {restaurantConfig.demoMode
+                          ? "Not configured in preview"
+                          : "Confirm in WhatsApp"}
                       </span>
                     </div>
 
                     <div className="border-t border-white/10 pt-5">
                       <div className="flex items-center justify-between gap-3">
-                        <span className="font-semibold">Subtotal</span>
-                        <span className="text-2xl font-bold text-[#E87532]">
-                          {formatPrice(cartTotal)}
+                        <span className="font-semibold">
+                          {deliveryFee === null ? "Estimated total" : "Order total"}
+                        </span>
+                        <span className="text-right text-xl font-bold text-[#B89A62] sm:text-2xl">
+                          {deliveryFee === null
+                            ? `${formatPrice(cartTotal)} + delivery`
+                            : formatPrice(estimatedTotal)}
                         </span>
                       </div>
+                      {deliveryFee === null && (
+                        <p className="mt-2 text-xs leading-5 text-[#A49C91]">
+                          Delivery fee depends on your area and is not included yet.
+                        </p>
+                      )}
                     </div>
                   </div>
 
                   {/* Customer Checkout Form */}
-                  <form onSubmit={handleCheckout} className="mt-8 space-y-5">
+                  <form onSubmit={handleCheckout} noValidate className="mt-8 space-y-5">
                     <div className="border-t border-white/10 pt-7">
-                      <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#E87532]">
+                      <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#B89A62]">
                         Delivery Information
                       </p>
 
@@ -313,13 +366,18 @@ Please confirm my order. Thank you!
                             autoComplete="name"
                             required
                             maxLength={80}
+                            minLength={2}
+                            aria-invalid={Boolean(fieldErrors.name)}
+                            aria-describedby={fieldErrors.name ? "customerName-error" : undefined}
                             value={customerName}
-                            onChange={(event) =>
-                              setCustomerName(event.target.value)
-                            }
+                            onChange={(event) => {
+                              setCustomerName(event.target.value);
+                              setFieldErrors((current) => ({ ...current, name: "" }));
+                            }}
                             placeholder="Enter your full name"
-                            className="w-full border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#E87532]"
+                            className="w-full border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#B89A62]"
                           />
+                          {fieldErrors.name && <p id="customerName-error" role="alert" className="mt-1.5 text-xs text-red-300">{fieldErrors.name}</p>}
                         </div>
 
                         <div>
@@ -335,13 +393,18 @@ Please confirm my order. Thank you!
                             autoComplete="tel"
                             required
                             maxLength={20}
+                            inputMode="tel"
+                            aria-invalid={Boolean(fieldErrors.phone)}
+                            aria-describedby={fieldErrors.phone ? "customerPhone-error" : undefined}
                             value={customerPhone}
-                            onChange={(event) =>
-                              setCustomerPhone(event.target.value)
-                            }
+                            onChange={(event) => {
+                              setCustomerPhone(event.target.value);
+                              setFieldErrors((current) => ({ ...current, phone: "" }));
+                            }}
                             placeholder="03XX XXXXXXX"
-                            className="w-full border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#E87532]"
+                            className="w-full border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#B89A62]"
                           />
+                          {fieldErrors.phone && <p id="customerPhone-error" role="alert" className="mt-1.5 text-xs text-red-300">{fieldErrors.phone}</p>}
                         </div>
 
                         <div>
@@ -357,13 +420,18 @@ Please confirm my order. Thank you!
                             required
                             rows={3}
                             maxLength={300}
+                            minLength={8}
+                            aria-invalid={Boolean(fieldErrors.address)}
+                            aria-describedby={fieldErrors.address ? "customerAddress-error" : undefined}
                             value={customerAddress}
-                            onChange={(event) =>
-                              setCustomerAddress(event.target.value)
-                            }
-                            placeholder="Enter your complete address"
-                            className="w-full resize-y border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#E87532]"
+                            onChange={(event) => {
+                              setCustomerAddress(event.target.value);
+                              setFieldErrors((current) => ({ ...current, address: "" }));
+                            }}
+                            placeholder="Street, area, and city"
+                            className="w-full resize-y border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#B89A62]"
                           />
+                          {fieldErrors.address && <p id="customerAddress-error" role="alert" className="mt-1.5 text-xs text-red-300">{fieldErrors.address}</p>}
                         </div>
 
                         <div>
@@ -383,27 +451,35 @@ Please confirm my order. Thank you!
                               setInstructions(event.target.value)
                             }
                             placeholder="Any special instructions?"
-                            className="w-full resize-y border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#E87532]"
+                            className="w-full resize-y border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#B89A62]"
                           />
                         </div>
                       </div>
                     </div>
 
+                    {checkoutError && (
+                      <p role="alert" className="rounded-lg border border-red-400/25 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+                        {checkoutError}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
-                      className="flex w-full items-center justify-center gap-3 bg-[#E87532] px-5 py-4 text-sm font-bold text-white transition duration-300 hover:bg-[#CF6429]"
+                      className="flex min-h-12 w-full items-center justify-center gap-3 bg-[#B89A62] px-5 py-4 text-sm font-bold text-[#171713] transition duration-300 hover:bg-[#9c7d48]"
                     >
-                      Place Order on WhatsApp
+                      {restaurantConfig.demoMode ? "Preview in WhatsApp" : "Continue to WhatsApp"}
                       <ArrowRight size={17} />
                     </button>
                   </form>
 
                   <p className="mt-4 text-center text-xs leading-6 text-[#8F857A]">
-                    Your order details will open in WhatsApp for confirmation.
+                    {restaurantConfig.demoMode
+                      ? "A sample order draft opens in WhatsApp. No restaurant receives it, and no payment is taken."
+                      : "Review the order in WhatsApp and send it to the restaurant. Delivery fee and payment are confirmed there."}
                   </p>
 
                   <div className="mt-7 flex items-center justify-center gap-2 border-t border-white/10 pt-6 text-xs text-[#A49C91]">
-                    <ShoppingBag size={15} className="text-[#E87532]" />
+                    <ShoppingBag size={15} className="text-[#B89A62]" />
                     Freshly prepared with care
                   </div>
                 </aside>

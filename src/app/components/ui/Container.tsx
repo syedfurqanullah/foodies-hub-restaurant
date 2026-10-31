@@ -19,7 +19,7 @@ export default function Container({
 }: ContainerProps) {
   return (
     <div
-      className={`mx-auto w-full px-5 sm:px-8 lg:px-10 ${containerSizes[size]} ${className}`}
+      className={`mx-auto w-full px-4 sm:px-8 lg:px-10 ${containerSizes[size]} ${className}`}
       {...props}
     >
       {children}

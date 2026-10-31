@@ -27,13 +27,16 @@ export interface RestaurantTheme {
 }
 
 export interface RestaurantConfig {
+  demoMode: boolean;
   name: string;
   tagline: string;
   description: string;
   logo: string;
   heroImage: string;
+  socialPreviewImage: string;
   contact: RestaurantContact;
-  socialLinks: RestaurantSocialLinks;
+  deliveryFee?: number | null;
+  socialLinks?: RestaurantSocialLinks;
   openingHours: RestaurantHours[];
   theme: RestaurantTheme;
 }

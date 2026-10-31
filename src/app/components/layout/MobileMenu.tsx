@@ -41,7 +41,7 @@ export default function MobileMenu() {
           {/* Mobile Navigation Panel */}
           <div
             id="mobile-navigation"
-            className="fixed inset-x-0 top-[76px] z-[110] max-h-[calc(100dvh-76px)] overflow-y-auto border-t border-white/10 bg-[#171512] px-5 pb-8 pt-5 text-[#F4EFE5] shadow-2xl sm:top-20 sm:max-h-[calc(100dvh-80px)] sm:px-8"
+            className="fixed inset-x-0 top-[76px] z-[110] max-h-[calc(100dvh-76px)] overflow-y-auto border-t border-white/10 bg-[#171713] px-5 pb-8 pt-5 text-[#F4EFE5] shadow-2xl sm:top-20 sm:max-h-[calc(100dvh-80px)] sm:px-8"
           >
             {/* Mobile Navigation Links */}
             <nav aria-label="Mobile navigation">
@@ -76,7 +76,7 @@ export default function MobileMenu() {
             {/* Mobile Quick Actions */}
             <div className="mt-5 grid grid-cols-2 gap-3">
               <Link
-                href="/menu"
+                href="/cart"
                 onClick={closeMenu}
                 className="flex items-center justify-center gap-2 rounded-button border border-white/15 px-3 py-3 text-sm font-medium text-white/85 transition-colors hover:border-brand-accent hover:text-brand-accent"
               >
@@ -98,7 +98,7 @@ export default function MobileMenu() {
             <Link
               href="/menu"
               onClick={closeMenu}
-              className="mt-5 flex w-full items-center justify-center gap-2 rounded-button bg-brand-accent px-5 py-4 font-semibold text-white shadow-lg shadow-orange-950/25 transition-all duration-300 hover:bg-orange-600"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-button bg-brand-accent px-5 py-4 font-semibold text-[#171713] shadow-lg shadow-amber-950/25 transition-all duration-300 hover:bg-amber-700"
             >
               Order Now
               <ArrowUpRight size={18} />

@@ -7,6 +7,8 @@ export interface PopularDish {
   image: string;
   badge?: string;
   category: string;
+  dietaryTags?: string[];
+  allergens?: string[];
 }
 
 export const popularDishes: PopularDish[] = [
@@ -50,7 +52,7 @@ export const popularDishes: PopularDish[] = [
     name: "Chocolate Lava Cake",
     description: "Warm chocolate cake with a rich molten center.",
     price: 650,
-    image: "/images/menu/chocolate-lava-cake.jpg",
+    image: "/images/categories/desserts.jpg",
     badge: "Popular",
     category: "desserts",
   },
@@ -59,7 +61,7 @@ export const popularDishes: PopularDish[] = [
     name: "Classic Cheesecake",
     description: "Creamy cheesecake with a smooth, rich texture.",
     price: 700,
-    image: "/images/menu/cheesecake.jpg",
+    image: "/images/categories/desserts.jpg",
     category: "desserts",
   },
   {
@@ -67,7 +69,7 @@ export const popularDishes: PopularDish[] = [
     name: "Fresh Lemonade",
     description: "Refreshing lemonade made with fresh lemons.",
     price: 300,
-    image: "/images/menu/fresh-lemonade.jpg",
+    image: "/images/categories/drinks.jpg",
     category: "drinks",
   },
   {
@@ -75,7 +77,7 @@ export const popularDishes: PopularDish[] = [
     name: "Mint Margarita",
     description: "A refreshing mint drink with a citrus twist.",
     price: 400,
-    image: "/images/menu/mint-margarita.jpg",
+    image: "/images/categories/drinks.jpg",
     category: "drinks",
   },
 ];

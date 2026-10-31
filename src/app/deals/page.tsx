@@ -3,17 +3,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Check, ShoppingCart, Tag } from "lucide-react";
 
-import Navbar from "../components/layout/Navbar";
 import Container from "../components/ui/Container";
 import { deals } from "../components/data/deals";
 import { useCart } from "../components/context/CartContext";
+import Reveal from "../components/ui/Reveal";
 
 export default function DealsPage() {
   const { addToCart } = useCart();
   const [addedDealId, setAddedDealId] = useState<string | null>(null);
+  const [highlightedDealId, setHighlightedDealId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const dealId = new URLSearchParams(window.location.search).get("deal");
+    if (!dealId || !deals.some((deal) => deal.id === dealId)) return;
+
+    window.setTimeout(() => {
+      setHighlightedDealId(dealId);
+      document.getElementById(`deal-${dealId}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 0);
+    window.setTimeout(() => setHighlightedDealId(null), 2400);
+  }, []);
 
   const handleAddToCart = (deal: (typeof deals)[number]) => {
     addToCart({
@@ -37,17 +52,15 @@ export default function DealsPage() {
 
   return (
     <>
-      <Navbar />
-
-      <main className="min-h-screen bg-[#100F0D] text-white">
+      <main className="min-h-screen bg-[#171713] text-white">
         {/* Hero Section */}
-        <section className="border-b border-white/10 bg-[#171512] py-20 sm:py-28">
+        <section className="border-b border-white/10 bg-[#171713] py-20 sm:py-28">
           <Container size="wide">
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
               Special Offers
             </span>
 
-            <h1 className="section-heading mt-5 text-5xl sm:text-6xl lg:text-7xl">
+            <h1 className="section-heading mt-5 text-[clamp(2.25rem,9vw,3.75rem)] sm:text-6xl lg:text-7xl">
               Delicious Deals.
               <span className="block text-brand-accent">
                 Better Moments.
@@ -61,7 +74,7 @@ export default function DealsPage() {
 
             <Link
               href="/menu"
-              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-brand-accent px-6 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
+              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-brand-accent px-6 py-3 text-sm font-bold text-[#171713] transition hover:bg-amber-700"
             >
               Explore Full Menu
               <ArrowRight size={17} />
@@ -74,7 +87,7 @@ export default function DealsPage() {
           <Container size="wide">
             <div className="mb-10 text-center">
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
-                Limited Time Offers
+              Sample Offers
               </span>
 
               <h2 className="section-heading mt-3 text-3xl sm:text-4xl">
@@ -88,13 +101,15 @@ export default function DealsPage() {
             </div>
 
             <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-              {deals.map((deal) => {
+              {deals.map((deal, index) => {
                 const isAdded = addedDealId === deal.id;
 
                 return (
+                  <Reveal key={deal.id} delay={index * 0.06}>
                   <article
-                    key={deal.id}
-                    className="group overflow-hidden rounded-2xl border border-white/10 bg-[#171512] transition duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
+                    data-card-3d
+                    id={`deal-${deal.id}`}
+                    className={`group overflow-hidden rounded-xl border bg-[#171713] transition duration-300 hover:border-brand-accent/50 ${highlightedDealId === deal.id ? "border-brand-accent ring-2 ring-brand-accent/40" : "border-white/10"}`}
                   >
                     {/* Deal Image */}
                     <div className="relative aspect-[4/3] overflow-hidden bg-[#211D19]">
@@ -106,7 +121,7 @@ export default function DealsPage() {
                         className="object-cover transition duration-700 group-hover:scale-110"
                       />
 
-                      <span className="absolute left-4 top-4 rounded-full bg-brand-accent px-3 py-1.5 text-xs font-bold text-white">
+                      <span className="absolute left-4 top-4 rounded-full bg-brand-accent px-3 py-1.5 text-xs font-bold text-[#171713]">
                         {deal.discount}
                       </span>
 
@@ -145,10 +160,10 @@ export default function DealsPage() {
                       <button
                         type="button"
                         onClick={() => handleAddToCart(deal)}
-                        className={`mt-5 flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold text-white transition ${
+                        className={`mt-5 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold transition ${
                           isAdded
-                            ? "bg-green-700"
-                            : "bg-brand-accent hover:bg-orange-600"
+                            ? "bg-green-700 text-white"
+                            : "bg-brand-accent text-[#171713] hover:bg-amber-700"
                         }`}
                       >
                         {isAdded ? (
@@ -165,6 +180,7 @@ export default function DealsPage() {
                       </button>
                     </div>
                   </article>
+                  </Reveal>
                 );
               })}
             </div>
@@ -172,7 +188,7 @@ export default function DealsPage() {
             <div className="mt-12 text-center">
               <Link
                 href="/cart"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-brand-accent transition hover:text-orange-400"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-brand-accent transition hover:text-amber-300"
               >
                 View Your Cart
                 <ArrowRight size={16} />

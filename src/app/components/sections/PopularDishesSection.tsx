@@ -5,17 +5,18 @@ import { ArrowUpRight } from "lucide-react";
 
 import Container from "../ui/Container";
 import { popularDishes } from "../data/popularDishes";
+import Reveal from "../ui/Reveal";
 
 export default function PopularDishesSection() {
   const featuredDishes = popularDishes.slice(0, 4);
 
   return (
-    <section className="section-padding bg-[#100F0D]">
+    <section className="section-padding bg-[#171713]">
       <Container size="wide">
         {/* Section Heading */}
         <div className="mb-10 text-center lg:mb-12">
           <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.25em] text-brand-accent">
-            Our Favorites
+          Signature Plates · Demo Menu
           </span>
 
           <h2 className="section-heading text-3xl text-[#F4EFE5] sm:text-4xl lg:text-5xl">
@@ -23,17 +24,18 @@ export default function PopularDishesSection() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/60 sm:text-base">
-            Discover the dishes our guests love. Fresh flavors and delicious
-            moments in every bite.
+            A sample selection of dishes and prices. Swap these for the restaurant’s
+            verified signature items before presenting a personalized preview.
           </p>
         </div>
 
         {/* Dish Cards */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {featuredDishes.map((dish) => (
+          {featuredDishes.map((dish, index) => (
+            <Reveal key={dish.id} delay={index * 0.06}>
             <article
-              key={dish.id}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-[#1B1916] transition-all duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
+              data-card-3d
+              className="group overflow-hidden rounded-xl border border-white/10 bg-[#1B1916] transition-all duration-300 hover:border-brand-accent/50"
             >
               {/* Dish Image */}
               <div className="relative aspect-[4/3] overflow-hidden bg-[#25221E]">
@@ -47,7 +49,7 @@ export default function PopularDishesSection() {
 
                 {/* Optional Badge */}
                 {dish.badge && (
-                  <span className="absolute left-3 top-3 rounded-full bg-brand-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+                  <span className="absolute left-3 top-3 rounded-full bg-brand-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#171713]">
                     {dish.badge}
                   </span>
                 )}
@@ -78,6 +80,7 @@ export default function PopularDishesSection() {
                 </div>
               </div>
             </article>
+            </Reveal>
           ))}
         </div>
 

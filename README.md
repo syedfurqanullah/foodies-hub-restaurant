@@ -1,85 +1,66 @@
-# Foodies Hub
+# Foodies Hub Restaurant Website
 
-A restaurant demo website currently under development. The project is being built section by section, with the goal of creating a clean, modern restaurant website experience.
+A responsive restaurant website concept built with Next.js, React, TypeScript, Tailwind CSS, and Framer Motion. It includes restaurant pages, a sample menu, deals, a gallery, cart controls, and a WhatsApp order preview.
 
-> **Status:** Work in Progress — features and documentation will be updated as development continues.
+## Features
 
-## Overview
-
-Foodies Hub is a frontend restaurant website project built to practise and demonstrate modern web development. The interface and functionality are being developed incrementally, so this README will evolve alongside the project.
-
-## Tech Stack
-
-- **Next.js 16** — React framework
-- **React 19** — UI library
-- **TypeScript** — type-safe JavaScript
-- **Tailwind CSS 4** — styling
-- **Framer Motion** — animations
-- **Lucide React** — icons
+- Responsive home, menu, deals, about, gallery, contact, and cart pages
+- Menu search, category filters, and item links
+- Cart quantity controls with browser storage
+- WhatsApp order preview for the sample checkout flow
+- Page metadata, social preview images, sitemap, and robots rules
+- Subtle card motion with reduced-motion support
 
 ## Getting Started
 
-### Prerequisites
+Install dependencies and start the local server:
 
-- Node.js (LTS recommended)
-- npm (or another compatible package manager)
+```bash
+npm install
+npm run dev
+```
 
-### Installation
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-1. Clone the repository:
+## Demo Mode
 
-   ```bash
-   git clone https://github.com/syedfurqanullah/foodies-hub-restaurant.git
-   ```
+The project starts with `demoMode: true`. The restaurant details, menu, prices, deals, photos, and reviews are sample content. The cart is stored in the visitor's browser. Checkout opens a sample WhatsApp draft; it does not send an order to a restaurant. The contact form opens an email draft and does not send data to a server.
 
-2. Move into the project directory:
+## Customize for a Restaurant
 
-   ```bash
-   cd foodies-hub-restaurant
-   ```
+Update `src/app/components/config/restaurant.ts` with details approved by the restaurant. Replace sample menu and deal content in `src/app/components/data/`. Use restaurant-approved photos and verified reviews.
 
-3. Install dependencies:
+Confirm all business details before sharing a preview, including contact information, opening hours, delivery areas, menu prices, dietary tags, allergens, and delivery fees. Do not add dietary or allergen claims until the restaurant verifies them.
 
-   ```bash
-   npm install
-   ```
+Keep `demoMode: true` for previews. Set it to `false` only after the restaurant approves the content and the WhatsApp number is verified.
 
-4. Start the development server:
+## Production SEO
 
-   ```bash
-   npm run dev
-   ```
+Set `NEXT_PUBLIC_SITE_URL` to the final website address, for example:
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+```env
+NEXT_PUBLIC_SITE_URL=https://your-restaurant-domain.com
+```
 
-## Available Scripts
+Canonical URLs, the sitemap, and search indexing are enabled only when `demoMode` is `false` and the site URL is valid. Restaurant structured data also needs an approved phone number and address. The cart page stays out of search results.
+
+## Ordering Limitations
+
+This project is currently a frontend demo. It does not include an order database, admin dashboard, online payments, delivery-zone checks, or order tracking. Add and verify these services before using the site for automated production ordering.
+
+## Scripts
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the local development server |
-| `npm run build` | Build the application for production |
-| `npm run start` | Start the production server |
+| `npm run dev` | Start the development server |
 | `npm run lint` | Run ESLint |
-
-## Project Progress
-
-Development is ongoing. This section will be updated as each website section or feature is implemented and verified.
-
-- [ ] Website sections and layout
-- [ ] Responsive design
-- [ ] Interactive elements and animations
-- [ ] Final testing and production build
-
-*Checklist items will be marked complete only after the corresponding work is implemented.*
+| `npm run build` | Create a production build |
+| `npm run start` | Run the production build locally |
 
 ## Project Structure
 
-The application uses the Next.js App Router inside the `src/app` directory. The structure may expand as reusable components and additional sections are introduced.
-
-## Contributing
-
-This is a personal demo project currently under active development. Suggestions and feedback are welcome.
-
-## License
-
-No license has been added yet. All rights are reserved by the repository owner unless a license is added.
+- `src/app/` - pages, metadata, sitemap, robots rules, and global styles
+- `src/app/components/config/` - restaurant and WhatsApp settings
+- `src/app/components/data/` - sample dishes, deals, gallery images, and reviews
+- `src/app/components/layout/` - shared navigation, footer, and cart components
+- `public/images/` - demo photos and social preview image

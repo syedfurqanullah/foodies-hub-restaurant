@@ -4,11 +4,12 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import Container from "../ui/Container";
+import Reveal from "../ui/Reveal";
 import { categories } from "../data/categories";
 
 export default function CategoriesSection() {
   return (
-    <section className="section-padding bg-[#171512]">
+    <section className="section-padding bg-[#171713]">
       <Container size="wide">
         {/* Section Heading */}
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end lg:mb-12">
@@ -39,11 +40,11 @@ export default function CategoriesSection() {
         {/* Category Cards */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
         
-          {categories.map((category) => (
+          {categories.map((category, index) => (
+            <Reveal key={category.id} delay={index * 0.05}>
             <Link
-              key={category.id}
               href={category.href}
-              className="group relative isolate min-h-[190px] overflow-hidden rounded-2xl border border-white/10 bg-[#25221E] sm:min-h-[240px] lg:min-h-[280px]"
+              className="group relative isolate block min-h-[190px] overflow-hidden rounded-xl border border-white/10 bg-[#25221E] sm:min-h-[240px] lg:min-h-[280px]"
             >
               {/* Category Image */}
               <Image
@@ -69,11 +70,12 @@ export default function CategoriesSection() {
                   </p>
                 </div>
 
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-white">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-[#171713]">
                   <ArrowUpRight size={17} />
                 </span>
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       </Container>

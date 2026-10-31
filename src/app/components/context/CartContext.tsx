@@ -3,6 +3,7 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -34,6 +35,9 @@ interface CartContextType {
   cartCount: number;
   cartTotal: number;
   isCartReady: boolean;
+  lastAddedItem: CartItem | null;
+  isCartPreviewOpen: boolean;
+  closeCartPreview: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -43,6 +47,8 @@ const CART_STORAGE_KEY = "foodies-hub-cart";
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartReady, setIsCartReady] = useState(false);
+  const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
+  const [isCartPreviewOpen, setIsCartPreviewOpen] = useState(false);
 
   // Load saved cart from localStorage
   useEffect(() => {
@@ -81,12 +87,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
       quantity: 1,
     };
 
+    const existingItem = cartItems.find((item) => item.id === product.id);
+    setLastAddedItem(
+      existingItem
+        ? { ...existingItem, quantity: existingItem.quantity + 1 }
+        : cartProduct,
+    );
+    setIsCartPreviewOpen(true);
+
     setCartItems((currentItems) => {
-      const existingItem = currentItems.find(
+      const currentItem = currentItems.find(
         (item) => item.id === product.id
       );
 
-      if (existingItem) {
+      if (currentItem) {
         return currentItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -120,6 +134,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const clearCart = () => setCartItems([]);
+  const closeCartPreview = useCallback(() => setIsCartPreviewOpen(false), []);
 
   const cartCount = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -142,6 +157,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         cartCount,
         cartTotal,
         isCartReady,
+        lastAddedItem,
+        isCartPreviewOpen,
+        closeCartPreview,
       }}
     >
       {children}

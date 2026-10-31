@@ -1,1 +1,3 @@
-export const WHATSAPP_NUMBER = "03196976917";
+import { restaurantConfig } from "./restaurant";
+
+export const WHATSAPP_NUMBER = restaurantConfig.contact.whatsapp.replace(/\D/g, "");

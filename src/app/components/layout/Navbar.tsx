@@ -3,10 +3,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import {
   Search,
-  ShoppingBag,
+  ShoppingCart,
   Menu,
   X,
   ArrowRight,
@@ -25,10 +26,35 @@ const navigationLinks = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const { cartCount } = useCart();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isMenuOpen]);
+
+  const focusMenuSearch = (event: MouseEvent<HTMLAnchorElement>) => {
+    const searchInput = document.getElementById("menu-search");
+    if (!searchInput) return;
+
+    event.preventDefault();
+    searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+    searchInput.focus({ preventScroll: true });
+  };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#100F0D]/95 text-white backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#171713]/95 text-white backdrop-blur-xl">
       <Container size="wide">
         <div className="flex h-20 items-center justify-between gap-5">
 
@@ -47,7 +73,7 @@ export default function Navbar() {
               />
             </div>
 
-            <span className="text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-brand-accent">
+            <span className="hidden text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-brand-accent sm:inline">
               Foodies{" "}
               <span className="text-brand-accent">Hub.</span>
             </span>
@@ -59,7 +85,8 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative py-2 text-sm font-medium text-white/70 transition-colors duration-300 hover:text-brand-accent"
+                aria-current={pathname === link.href ? "page" : undefined}
+                className={`group relative py-2 text-sm font-medium transition-colors duration-300 hover:text-brand-accent ${pathname === link.href ? "text-brand-accent" : "text-white/70"}`}
               >
                 {link.label}
 
@@ -74,9 +101,10 @@ export default function Navbar() {
 
             {/* Search */}
             <Link
-              href="/menu"
+              href="/menu?focus=search"
+              onClick={focusMenuSearch}
               aria-label="Search menu"
-              className="text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
+              className="flex h-11 w-11 items-center justify-center text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
             >
               <Search size={21} />
             </Link>
@@ -87,10 +115,10 @@ export default function Navbar() {
               aria-label={`Shopping cart with ${cartCount} items`}
               className="group relative text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
             >
-              <ShoppingBag size={22} />
+              <ShoppingCart size={22} aria-hidden="true" />
 
               {cartCount > 0 && (
-                <span className="absolute -right-2.5 -top-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white transition-transform duration-300 group-hover:scale-110">
+                <span className="absolute -right-2.5 -top-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-[#171713] transition-transform duration-300 group-hover:scale-110">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -99,7 +127,7 @@ export default function Navbar() {
             {/* Order Now */}
             <Link
               href="/menu"
-              className="group inline-flex items-center gap-2 rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg hover:shadow-brand-accent/20"
+              className="group inline-flex items-center gap-2 rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-[#171713] transition-all duration-300 hover:-translate-y-1 hover:bg-amber-700 hover:shadow-lg hover:shadow-brand-accent/20"
             >
               Order Now
 
@@ -115,9 +143,10 @@ export default function Navbar() {
 
             {/* Mobile Search */}
             <Link
-              href="/menu"
+              href="/menu?focus=search"
+              onClick={focusMenuSearch}
               aria-label="Search menu"
-              className="text-white/80 transition-colors duration-300 hover:text-brand-accent"
+              className="flex h-11 w-11 items-center justify-center text-white/80 transition-colors duration-300 hover:text-brand-accent"
             >
               <Search size={21} />
             </Link>
@@ -126,12 +155,12 @@ export default function Navbar() {
             <Link
               href="/cart"
               aria-label={`Shopping cart with ${cartCount} items`}
-              className="relative text-white/80 transition-colors duration-300 hover:text-brand-accent"
+              className="relative flex h-11 w-11 items-center justify-center text-white/80 transition-colors duration-300 hover:text-brand-accent"
             >
-              <ShoppingBag size={22} />
+              <ShoppingCart size={22} aria-hidden="true" />
 
               {cartCount > 0 && (
-                <span className="absolute -right-2.5 -top-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white">
+                <span className="absolute -right-2.5 -top-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-[#171713]">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -139,11 +168,13 @@ export default function Navbar() {
 
             {/* Mobile Menu Toggle */}
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
-              className="rounded-lg border border-white/20 p-2 text-white transition-all duration-300 hover:border-brand-accent hover:text-brand-accent"
+              aria-controls="mobile-navigation"
+              className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/20 text-white transition-all duration-300 hover:border-brand-accent hover:text-brand-accent"
             >
               {isMenuOpen ? (
                 <X size={22} />
@@ -157,12 +188,13 @@ export default function Navbar() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="border-t border-white/10 py-6 lg:hidden">
-            <nav className="flex flex-col gap-5">
+            <nav id="mobile-navigation" aria-label="Mobile navigation" className="flex flex-col gap-5">
               {navigationLinks.map((link, index) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
+                  aria-current={pathname === link.href ? "page" : undefined}
                   style={{
                     animationDelay: `${index * 60}ms`,
                   }}
@@ -175,7 +207,7 @@ export default function Navbar() {
               <Link
                 href="/menu"
                 onClick={() => setIsMenuOpen(false)}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-orange-600"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-[#171713] transition-all duration-300 hover:bg-amber-700"
               >
                 Order Now
                 <ArrowRight size={16} />
