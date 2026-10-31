@@ -7,6 +7,7 @@ import DealsSection from "./components/sections/DealsSection";
 import WhyChooseUsSection from "./components/sections/WhyChooseUsSection";
 import TestimonialsSection from "./components/sections/TestimonialsSection";
 import { useCart } from "./components/context/CartContext";
+import WhatsAppButton from "./components/ui/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <DealsSection />
         <WhyChooseUsSection />
         <TestimonialsSection />
+        <WhatsAppButton />
      
 
       </main>
