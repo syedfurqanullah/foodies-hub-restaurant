@@ -5,6 +5,7 @@ import CategoriesSection from "./components/sections/CategoriesSection";
 import PopularDishesSection from "./components/sections/PopularDishesSection";
 import DealsSection from "./components/sections/DealsSection";
 import WhyChooseUsSection from "./components/sections/WhyChooseUsSection";
+import TestimonialsSection from "./components/sections/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <PopularDishesSection />
         <DealsSection />
         <WhyChooseUsSection />
+        <TestimonialsSection />
 
       </main>
     </>
