@@ -37,7 +37,7 @@ export default function HeroSection() {
                 className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-[#100d0a] via-[#100d0a]/65 to-[#100d0a]/10"
                 style={{
                     backgroundImage:
-                        "url('/images/hero/hero.png')",
+                        "url('/images/hero/hero.jpg')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
