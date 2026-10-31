@@ -8,5 +8,6 @@ export const navigationLinks: NavigationLink[] = [
   { label: "Menu", href: "/menu" },
   { label: "Deals", href: "/deals" },
   { label: "About", href: "/about" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
 ];
