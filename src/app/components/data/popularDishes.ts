@@ -6,6 +6,7 @@ export interface PopularDish {
   price: number;
   image: string;
   badge?: string;
+  category: string;
 }
 
 export const popularDishes: PopularDish[] = [
@@ -16,6 +17,7 @@ export const popularDishes: PopularDish[] = [
     price: 850,
     image: "/images/menu/classic-burger.jpg",
     badge: "Popular",
+    category: "burgers",
   },
   {
     id: "loaded-pizza",
@@ -24,6 +26,7 @@ export const popularDishes: PopularDish[] = [
     price: 1200,
     image: "/images/menu/loaded-pizza.jpg",
     badge: "Bestseller",
+    category: "pizza",
   },
   {
     id: "creamy-pasta",
@@ -31,6 +34,7 @@ export const popularDishes: PopularDish[] = [
     description: "Rich and creamy pasta with a flavorful sauce.",
     price: 950,
     image: "/images/menu/creamy-pasta.jpg",
+    category: "pasta",
   },
   {
     id: "bbq-platter",
@@ -38,5 +42,6 @@ export const popularDishes: PopularDish[] = [
     description: "A delicious selection of smoky BBQ favorites.",
     price: 1450,
     image: "/images/menu/bbq-platter.jpg",
+    category: "bbq",
   },
 ];

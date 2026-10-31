@@ -2,7 +2,9 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
+
 import Footer from "./components/layout/Footer";
+import { CartProvider } from "./components/context/CartContext";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -30,8 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${playfair.variable}`}>
-        {children}
-        <Footer />
+        <CartProvider>
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

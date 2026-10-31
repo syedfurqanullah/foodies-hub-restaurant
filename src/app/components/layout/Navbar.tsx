@@ -1,92 +1,188 @@
 
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 import {
   Search,
   ShoppingBag,
-  ArrowUpRight,
+  Menu,
+  X,
+  ArrowRight,
 } from "lucide-react";
 
+import { useCart } from "../context/CartContext";
 import Container from "../ui/Container";
-import MobileMenu from "../layout/MobileMenu";
-import { navigationLinks } from "../config/navigation";
+
+const navigationLinks = [
+  { label: "Home", href: "/" },
+  { label: "Menu", href: "/menu" },
+  { label: "About", href: "/about" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#171512]/95 text-[#F4EFE5] shadow-lg shadow-black/10 backdrop-blur-xl">
-      <Container size="wide">
-        <div className="flex h-[76px] items-center justify-between gap-4 sm:h-20">
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
-          {/* Restaurant Logo */}
+  return (
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#100F0D]/95 text-white backdrop-blur-xl">
+      <Container size="wide">
+        <div className="flex h-20 items-center justify-between gap-5">
+
+          {/* Logo */}
           <Link
             href="/"
-            aria-label="Foodies Hub home"
-            className="flex shrink-0 items-center"
+            className="group flex shrink-0 items-center gap-3"
           >
-            <span className="flex size-14 items-center justify-center overflow-hidden rounded-full border border-[#C49A54]/50">
+            <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/10 transition duration-300 group-hover:scale-105 group-hover:border-brand-accent">
               <Image
                 src="/logo/foodies-hub-logo.png"
                 alt="Foodies Hub"
-                width={56}
-                height={56}
-                priority
-                className="h-full w-full rounded-full object-contain"
+                fill
+                sizes="44px"
+                className="object-cover"
               />
+            </div>
+
+            <span className="text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-brand-accent">
+              Foodies{" "}
+              <span className="text-brand-accent">Hub.</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav
-            aria-label="Main navigation"
-            className="hidden items-center gap-6 lg:flex xl:gap-8"
-          >
+          <nav className="hidden items-center gap-7 lg:flex">
             {navigationLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative py-2 text-sm font-medium text-white/75 transition-colors duration-300 hover:text-brand-accent"
+                className="group relative py-2 text-sm font-medium text-white/70 transition-colors duration-300 hover:text-brand-accent"
               >
                 {link.label}
 
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-brand-accent transition-all duration-300 group-hover:w-full" />
+                {/* Animated Underline */}
+                <span className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-brand-accent transition-transform duration-300 ease-out group-hover:scale-x-100" />
               </Link>
             ))}
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden shrink-0 items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-5 lg:flex">
 
             {/* Search */}
             <Link
               href="/menu"
               aria-label="Search menu"
-              className="flex size-10 items-center justify-center rounded-full text-white/80 transition-colors duration-300 hover:bg-white/10 hover:text-brand-accent"
+              className="text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
             >
-              <Search size={19} strokeWidth={1.8} />
+              <Search size={21} />
             </Link>
 
-            {/* Shopping Bag */}
+            {/* Cart */}
             <Link
-              href="/menu"
-              aria-label="Open shopping bag"
-              className="flex size-10 items-center justify-center rounded-full text-white/80 transition-colors duration-300 hover:bg-white/10 hover:text-brand-accent"
+              href="/cart"
+              aria-label={`Shopping cart with ${cartCount} items`}
+              className="group relative text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
             >
-              <ShoppingBag size={19} strokeWidth={1.8} />
+              <ShoppingBag size={22} />
+
+              {cartCount > 0 && (
+                <span className="absolute -right-2.5 -top-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white transition-transform duration-300 group-hover:scale-110">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
             </Link>
 
-            {/* Order Button */}
+            {/* Order Now */}
             <Link
               href="/menu"
-              className="inline-flex items-center gap-2 rounded-button bg-brand-accent px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-950/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-orange-600"
+              className="group inline-flex items-center gap-2 rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg hover:shadow-brand-accent/20"
             >
               Order Now
-              <ArrowUpRight size={17} />
+
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
             </Link>
           </div>
 
-          {/* Mobile Navigation */}
-          <MobileMenu />
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-4 lg:hidden">
+
+            {/* Mobile Search */}
+            <Link
+              href="/menu"
+              aria-label="Search menu"
+              className="text-white/80 transition-colors duration-300 hover:text-brand-accent"
+            >
+              <Search size={21} />
+            </Link>
+
+            {/* Mobile Cart */}
+            <Link
+              href="/cart"
+              aria-label={`Shopping cart with ${cartCount} items`}
+              className="relative text-white/80 transition-colors duration-300 hover:text-brand-accent"
+            >
+              <ShoppingBag size={22} />
+
+              {cartCount > 0 && (
+                <span className="absolute -right-2.5 -top-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              className="rounded-lg border border-white/20 p-2 text-white transition-all duration-300 hover:border-brand-accent hover:text-brand-accent"
+            >
+              {isMenuOpen ? (
+                <X size={22} />
+              ) : (
+                <Menu size={22} />
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="border-t border-white/10 py-6 lg:hidden">
+            <nav className="flex flex-col gap-5">
+              {navigationLinks.map((link, index) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{
+                    animationDelay: `${index * 60}ms`,
+                  }}
+                  className="animate-[fadeIn_0.3s_ease-out_both] text-sm font-medium text-white/75 transition-all duration-300 hover:translate-x-2 hover:text-brand-accent"
+                >
+                  {link.label}
+                </Link>
+              ))}
+
+              <Link
+                href="/menu"
+                onClick={() => setIsMenuOpen(false)}
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-orange-600"
+              >
+                Order Now
+                <ArrowRight size={16} />
+              </Link>
+            </nav>
+          </div>
+        )}
       </Container>
     </header>
   );
