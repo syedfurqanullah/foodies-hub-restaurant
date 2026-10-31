@@ -13,11 +13,21 @@ import type { PopularDish } from "../data/popularDishes";
 
 export interface CartItem extends PopularDish {
   quantity: number;
+  originalPrice?: number;
+  discount?: string;
+  isDeal?: boolean;
 }
+
+type CartProductInput = Omit<PopularDish, "category"> & {
+  category?: string;
+  originalPrice?: number;
+  discount?: string;
+  isDeal?: boolean;
+};
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (dish: PopularDish) => void;
+  addToCart: (product: CartProductInput) => void;
   removeFromCart: (dishId: string) => void;
   updateQuantity: (dishId: string, quantity: number) => void;
   clearCart: () => void;
@@ -34,7 +44,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartReady, setIsCartReady] = useState(false);
 
-  // Load saved cart from browser storage
+  // Load saved cart from localStorage
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem(CART_STORAGE_KEY);
@@ -43,6 +53,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const parsedCart: CartItem[] = JSON.parse(savedCart);
 
         if (Array.isArray(parsedCart)) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
           setCartItems(parsedCart);
         }
       }
@@ -63,21 +74,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, [cartItems, isCartReady]);
 
-  const addToCart = (dish: PopularDish) => {
+  const addToCart = (product: CartProductInput) => {
+    const cartProduct: CartItem = {
+      ...product,
+      category: product.category ?? "general",
+      quantity: 1,
+    };
+
     setCartItems((currentItems) => {
       const existingItem = currentItems.find(
-        (item) => item.id === dish.id
+        (item) => item.id === product.id
       );
 
       if (existingItem) {
         return currentItems.map((item) =>
-          item.id === dish.id
+          item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
 
-      return [...currentItems, { ...dish, quantity: 1 }];
+      return [...currentItems, cartProduct];
     });
   };
 
@@ -102,9 +119,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
+  const clearCart = () => setCartItems([]);
 
   const cartCount = cartItems.reduce(
     (total, item) => total + item.quantity,

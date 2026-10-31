@@ -5,6 +5,7 @@ export interface Deal {
   description: string;
   originalPrice: number;
   discountedPrice: number;
+  discount: string;
   image: string;
   badge: string;
 }
@@ -16,8 +17,9 @@ export const deals: Deal[] = [
     description: "Classic beef burger with fries and a cold drink.",
     originalPrice: 1200,
     discountedPrice: 999,
+    discount: "17% OFF",
     image: "/images/deals/burger-combo.jpg",
-    badge: "Save 17%",
+    badge: "Best Value",
   },
   {
     id: "pizza-combo",
@@ -25,8 +27,9 @@ export const deals: Deal[] = [
     description: "Delicious pizza with a refreshing drink.",
     originalPrice: 1600,
     discountedPrice: 1299,
+    discount: "19% OFF",
     image: "/images/deals/pizza-combo.jpg",
-    badge: "Save 19%",
+    badge: "Popular Deal",
   },
   {
     id: "family-feast",
@@ -34,7 +37,8 @@ export const deals: Deal[] = [
     description: "A satisfying meal to share with your family.",
     originalPrice: 2800,
     discountedPrice: 2399,
+    discount: "14% OFF",
     image: "/images/deals/family-feast.jpg",
-    badge: "Save 14%",
+    badge: "Family Favorite",
   },
 ];
