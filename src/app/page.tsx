@@ -6,7 +6,6 @@ import PopularDishesSection from "./components/sections/PopularDishesSection";
 import DealsSection from "./components/sections/DealsSection";
 import WhyChooseUsSection from "./components/sections/WhyChooseUsSection";
 import TestimonialsSection from "./components/sections/TestimonialsSection";
-import { useCart } from "./components/context/CartContext";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 
 export default function Home() {
