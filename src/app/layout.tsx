@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import Footer from "./components/layout/Footer";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dmSans.variable} ${playfair.variable}`}>
         {children}
+        <Footer />
       </body>
     </html>
   );
