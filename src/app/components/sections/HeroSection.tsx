@@ -1,31 +1,8 @@
 
 import Link from "next/link";
-import {
-    ArrowRight,
-    ChefHat,
-    Leaf,
-    Heart,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import Container from "../ui/Container";
-
-const features = [
-    {
-        icon: Leaf,
-        title: "Fresh Ingredients",
-        description: "Quality ingredients, fresh every day.",
-    },
-    {
-        icon: ChefHat,
-        title: "Expert Chefs",
-        description: "Prepared with care and passion.",
-    },
-    {
-        icon: Heart,
-        title: "Made with Love",
-        description: "Great food for great moments.",
-    },
-];
 
 export default function HeroSection() {
     return (
@@ -34,21 +11,19 @@ export default function HeroSection() {
             {/* Background Food Image */}
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-[#100d0a] via-[#100d0a]/65 to-[#100d0a]/10"
+                className="pointer-events-none absolute inset-0 z-10"
                 style={{
-                    backgroundImage:
-                        "url('/images/hero/hero.jpg')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    backgroundImage: "url('/images/hero/hero.jpg')",
+                    backgroundSize: "auto 100%",
+                    backgroundPosition: "right center",
                     backgroundRepeat: "no-repeat",
-                    
                 }}
             />
 
             {/* Dark Gradient Overlay */}
             <div
-                  aria-hidden="true"
-  className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-[#100d0a]/95 via-[#100d0a]/50 to-transparent"
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-[#100d0a]/95 via-[#100d0a]/65 to-[#100d0a]/10"
             />
 
             <div
@@ -57,7 +32,7 @@ export default function HeroSection() {
             />
 
             <Container size="wide" className="relative z-20">
-                <div className="grid min-h-[650px] items-center gap-12 py-20 lg:grid-cols-2 lg:py-24">
+                <div className="grid min-h-[520px] items-center gap-12 py-16 lg:min-h-[580px] lg:grid-cols-2 lg:py-20">
 
                     {/* Hero Content */}
                     <div className="max-w-2xl">
@@ -80,7 +55,6 @@ export default function HeroSection() {
 
                         {/* Action Buttons */}
                         <div className="mt-9 flex flex-wrap gap-4">
-
                             <Link
                                 href="/menu"
                                 className="inline-flex items-center gap-3 rounded-button bg-brand-accent px-7 py-4 font-semibold text-white shadow-lg shadow-orange-950/30 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
@@ -95,37 +69,8 @@ export default function HeroSection() {
                             >
                                 Explore Menu
                             </Link>
-
                         </div>
 
-                        {/* Feature Highlights */}
-                        <div className="mt-16 grid grid-cols-1 gap-7 border-t border-white/20 pt-8 sm:grid-cols-3 sm:gap-5">
-
-                            {features.map((feature) => {
-                                const Icon = feature.icon;
-
-                                return (
-                                    <div key={feature.title}>
-
-                                        <Icon
-                                            size={27}
-                                            className="mb-3 text-brand-accent"
-                                            strokeWidth={1.7}
-                                        />
-
-                                        <h3 className="text-sm font-semibold text-white">
-                                            {feature.title}
-                                        </h3>
-
-                                        <p className="mt-2 text-xs leading-5 text-white/65">
-                                            {feature.description}
-                                        </p>
-
-                                    </div>
-                                );
-                            })}
-
-                        </div>
                     </div>
 
                     {/* Right Side Visual Space */}
