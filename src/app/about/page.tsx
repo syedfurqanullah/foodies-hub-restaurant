@@ -1,5 +1,7 @@
+
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Heart, Leaf, Utensils } from "lucide-react";
+import { ArrowRight, Heart, Leaf, ChefHat } from "lucide-react";
 import Navbar from "@/app/components/layout/Navbar";
 import Container from "@/app/components/ui/Container";
 
@@ -8,19 +10,19 @@ const values = [
     icon: Leaf,
     title: "Fresh Ingredients",
     description:
-      "We believe great food starts with fresh ingredients and thoughtful preparation.",
+      "We believe great food starts with quality ingredients and careful preparation.",
+  },
+  {
+    icon: ChefHat,
+    title: "Passion for Food",
+    description:
+      "Every dish is prepared with attention to detail, flavor, and presentation.",
   },
   {
     icon: Heart,
-    title: "Made with Passion",
+    title: "Made with Care",
     description:
-      "Every dish is prepared with care, attention, and a passion for great flavors.",
-  },
-  {
-    icon: Utensils,
-    title: "Memorable Experiences",
-    description:
-      "Good food brings people together and makes every moment more special.",
+      "We aim to make every meal a memorable part of your day.",
   },
 ];
 
@@ -29,33 +31,38 @@ export default function AboutPage() {
     <>
       <Navbar />
 
-      <main className="bg-[#100F0D] text-white">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-white/10">
+      <main className="overflow-hidden bg-[#100F0D] text-white">
+        {/* Hero */}
+        <section className="relative border-b border-white/10 py-24 sm:py-32">
           <div
             aria-hidden="true"
-            className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-brand-accent/10 blur-3xl"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_80%_30%,rgba(232,117,50,0.16),transparent_35%)]"
           />
 
           <Container size="wide" className="relative">
-            <div className="py-24 text-center sm:py-32">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-brand-accent">
-                Our Story
-              </p>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
+              Our Story
+            </span>
 
-              <h1 className="section-heading mx-auto mt-6 max-w-4xl text-5xl leading-tight sm:text-6xl lg:text-7xl">
-                More Than Food.
-                <span className="block text-brand-accent">
-                  It&apos;s an Experience.
-                </span>
-              </h1>
+            <h1 className="section-heading mt-6 max-w-3xl text-5xl leading-tight sm:text-6xl lg:text-7xl">
+              More Than Food.
+              <span className="mt-2 block text-brand-accent">
+                It&apos;s an Experience.
+              </span>
+            </h1>
 
-              <p className="mx-auto mt-7 max-w-2xl text-base leading-8 text-white/65 sm:text-lg">
-                At Foodies Hub, we believe every great moment deserves great
-                food. Our passion is bringing people together through delicious
-                flavors and memorable experiences.
-              </p>
-            </div>
+            <p className="mt-7 max-w-xl text-base leading-8 text-white/65 sm:text-lg">
+              Discover the passion, care, and love for food behind Foodies Hub.
+              We believe every meal should bring people together.
+            </p>
+
+            <Link
+              href="/menu"
+              className="mt-9 inline-flex items-center gap-3 rounded-xl bg-brand-accent px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-600"
+            >
+              Explore Our Menu
+              <ArrowRight size={18} />
+            </Link>
           </Container>
         </section>
 
@@ -63,72 +70,58 @@ export default function AboutPage() {
         <section className="py-20 sm:py-28">
           <Container size="wide">
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+              <div className="relative">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-[#211D19]">
+                  <Image
+                    src="/images/gallery/restaurant-interior.jpg"
+                    alt="Foodies Hub restaurant atmosphere"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="absolute -bottom-5 -right-3 -z-10 h-32 w-32 rounded-full bg-brand-accent/20 blur-3xl" />
+              </div>
+
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand-accent">
+                <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
                   Who We Are
-                </p>
+                </span>
 
                 <h2 className="section-heading mt-5 text-4xl sm:text-5xl">
-                  Bringing People Together, One Meal at a Time.
+                  A Love for Great Food
                 </h2>
 
                 <p className="mt-7 leading-8 text-white/65">
-                  Foodies Hub is built around a simple idea: good food creates
-                  great moments. We want every visit to feel welcoming, every
-                  dish to be enjoyable, and every meal to become a memorable
-                  experience.
+                  At Foodies Hub, our focus is simple: delicious food, quality
+                  ingredients, and a welcoming experience. We bring together
+                  flavors that make everyday meals feel special.
                 </p>
 
                 <p className="mt-5 leading-8 text-white/65">
-                  From everyday favorites to special meals, our focus is on
-                  flavor, quality, and the joy of sharing food with the people
-                  who matter.
+                  Whether you are sharing a meal with friends or enjoying a
+                  quiet moment, we want every visit to feel worthwhile.
                 </p>
-
-                <Link
-                  href="/menu"
-                  className="mt-8 inline-flex items-center gap-3 font-semibold text-brand-accent transition hover:gap-5"
-                >
-                  Explore Our Menu
-                  <ArrowRight size={19} />
-                </Link>
-              </div>
-
-              <div className="relative flex min-h-[340px] items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-[#1C1A17] p-10 sm:min-h-[420px]">
-                <div className="absolute inset-5 rounded-2xl border border-brand-accent/20" />
-
-                <div className="relative text-center">
-                  <span className="text-6xl text-brand-accent">✦</span>
-                  <p className="section-heading mt-6 text-4xl sm:text-5xl">
-                    Good Food.
-                  </p>
-                  <p className="section-heading mt-2 text-4xl text-brand-accent sm:text-5xl">
-                    Great Moments.
-                  </p>
-                  <p className="mt-5 text-sm uppercase tracking-[0.25em] text-white/45">
-                    The Foodies Hub Experience
-                  </p>
-                </div>
               </div>
             </div>
           </Container>
         </section>
 
-        {/* Our Values */}
+        {/* Values */}
         <section className="border-y border-white/10 bg-[#171512] py-20 sm:py-24">
           <Container size="wide">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand-accent">
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
                 What Matters to Us
-              </p>
+              </span>
 
               <h2 className="section-heading mt-5 text-4xl sm:text-5xl">
-                The Values Behind Every Meal
+                The Values Behind Every Dish
               </h2>
 
               <p className="mt-5 leading-7 text-white/60">
-                Everything we do comes back to creating food and experiences
-                worth coming back for.
+                The little things matter. These are the values that guide our
+                approach to food and hospitality.
               </p>
             </div>
 
@@ -145,11 +138,11 @@ export default function AboutPage() {
                       <Icon size={27} />
                     </div>
 
-                    <h3 className="mt-7 text-xl font-semibold">
+                    <h3 className="mt-7 text-xl font-bold">
                       {value.title}
                     </h3>
 
-                    <p className="mt-4 leading-7 text-white/60">
+                    <p className="mt-4 text-sm leading-7 text-white/60">
                       {value.description}
                     </p>
                   </div>
@@ -162,21 +155,25 @@ export default function AboutPage() {
         {/* CTA */}
         <section className="py-20 sm:py-24">
           <Container size="wide">
-            <div className="rounded-3xl bg-brand-accent px-6 py-14 text-center text-white sm:px-12 sm:py-20">
-              <h2 className="section-heading text-4xl sm:text-5xl">
-                Ready for Something Delicious?
+            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#292019] to-[#171512] px-6 py-14 text-center sm:px-12">
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
+                Discover Something Delicious
+              </span>
+
+              <h2 className="section-heading mx-auto mt-5 max-w-2xl text-4xl sm:text-5xl">
+                Your Next Favorite Meal Is Waiting
               </h2>
 
-              <p className="mx-auto mt-5 max-w-xl leading-7 text-white/85">
-                Explore our menu and discover your next favorite meal.
+              <p className="mx-auto mt-5 max-w-lg leading-7 text-white/60">
+                Explore our menu and discover flavors worth coming back for.
               </p>
 
               <Link
                 href="/menu"
-                className="mt-8 inline-flex items-center gap-3 rounded-xl bg-[#171512] px-7 py-4 font-semibold text-white transition hover:bg-black"
+                className="mt-8 inline-flex items-center gap-3 rounded-xl bg-brand-accent px-7 py-4 text-sm font-bold text-white transition hover:bg-orange-600"
               >
-                Explore Menu
-                <ArrowRight size={19} />
+                View Our Menu
+                <ArrowRight size={18} />
               </Link>
             </div>
           </Container>
