@@ -23,16 +23,16 @@ export default function Navbar() {
             aria-label="Foodies Hub home"
             className="flex shrink-0 items-center"
           >
-             <span className="flex size-14 items-center justify-center overflow-hidden rounded-full border border-[#C49A54]/50">
-    <Image
-      src="/logo/foodies-hub-logo.png"
-      alt="Foodies Hub"
-      width={56}
-      height={56}
-      priority
-      className="h-full w-full rounded-full object-contain"
-    />
-  </span>
+            <span className="flex size-14 items-center justify-center overflow-hidden rounded-full border border-[#C49A54]/50">
+              <Image
+                src="/logo/foodies-hub-logo.png"
+                alt="Foodies Hub"
+                width={56}
+                height={56}
+                priority
+                className="h-full w-full rounded-full object-contain"
+              />
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
