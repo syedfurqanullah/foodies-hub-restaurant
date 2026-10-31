@@ -35,12 +35,12 @@ export default function MenuPage() {
   const { addToCart, cartCount } = useCart();
 
   const filteredDishes = useMemo(() => {
+    const searchTerm = searchQuery.trim().toLowerCase();
+
     return popularDishes.filter((dish) => {
       const matchesCategory =
         activeCategory === "All" ||
-        dish.category === activeCategory.toLowerCase();
-
-      const searchTerm = searchQuery.trim().toLowerCase();
+        dish.category.toLowerCase() === activeCategory.toLowerCase();
 
       const matchesSearch =
         dish.name.toLowerCase().includes(searchTerm) ||
@@ -62,47 +62,57 @@ export default function MenuPage() {
     }, 1200);
   };
 
+  const resetFilters = () => {
+    setActiveCategory("All");
+    setSearchQuery("");
+  };
+
   return (
     <>
       <Navbar />
 
       <main className="min-h-screen bg-[#100F0D] text-white">
         {/* Hero Section */}
-        <section className="border-b border-white/10 bg-[#171512] py-20 sm:py-28">
+        <section className="relative overflow-hidden border-b border-white/10 bg-[#171512] py-20 sm:py-28">
+          <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#E87532]/10 blur-3xl" />
+
           <Container size="wide">
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
-              Freshly Prepared
-            </span>
-
-            <h1 className="section-heading mt-5 text-5xl sm:text-6xl lg:text-7xl">
-              Explore Our{" "}
-              <span className="text-brand-accent">Menu.</span>
-            </h1>
-
-            <p className="mt-6 max-w-xl leading-8 text-white/60">
-              Discover delicious flavors, carefully prepared dishes,
-              and something special for every craving.
-            </p>
-
-            <Link
-              href="/"
-              className="mt-7 inline-flex items-center gap-2 text-sm text-white/60 transition hover:text-brand-accent"
-            >
-              Back to Home
-              <ArrowRight size={16} />
-            </Link>
-
-            {/* Cart Shortcut */}
-            <Link
-              href="/cart"
-              className="mt-8 inline-flex items-center gap-3 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold transition hover:border-brand-accent"
-            >
-              <ShoppingBag size={18} className="text-brand-accent" />
-              View Cart
-              <span className="rounded-full bg-brand-accent px-2 py-0.5 text-xs text-white">
-                {cartCount}
+            <div className="relative">
+              <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
+                Freshly Prepared
               </span>
-            </Link>
+
+              <h1 className="section-heading mt-5 text-5xl sm:text-6xl lg:text-7xl">
+                Explore Our{" "}
+                <span className="text-brand-accent">Menu.</span>
+              </h1>
+
+              <p className="mt-6 max-w-xl leading-8 text-white/60">
+                Discover delicious flavors, carefully prepared dishes,
+                and something special for every craving.
+              </p>
+
+              <Link
+                href="/"
+                className="mt-7 inline-flex items-center gap-2 text-sm text-white/60 transition hover:text-brand-accent"
+              >
+                Back to Home
+                <ArrowRight size={16} />
+              </Link>
+
+              <div>
+                <Link
+                  href="/cart"
+                  className="mt-8 inline-flex items-center gap-3 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold transition hover:border-brand-accent"
+                >
+                  <ShoppingBag size={18} className="text-brand-accent" />
+                  View Cart
+                  <span className="rounded-full bg-brand-accent px-2 py-0.5 text-xs text-white">
+                    {cartCount}
+                  </span>
+                </Link>
+              </div>
+            </div>
           </Container>
         </section>
 
@@ -203,7 +213,11 @@ export default function MenuPage() {
 
                     {/* Dish Details */}
                     <div className="p-5">
-                      <h3 className="text-lg font-bold">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">
+                        {dish.category}
+                      </p>
+
+                      <h3 className="mt-2 text-lg font-bold">
                         {dish.name}
                       </h3>
 
@@ -254,16 +268,13 @@ export default function MenuPage() {
                 </h3>
 
                 <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-white/50">
-                  We couldn't find any dishes matching your search.
+                  We couldn&apos;t find any dishes matching your search.
                   Try another name or select a different category.
                 </p>
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setActiveCategory("All");
-                    setSearchQuery("");
-                  }}
+                  onClick={resetFilters}
                   className="mt-6 rounded-lg bg-brand-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
                 >
                   View All Dishes
