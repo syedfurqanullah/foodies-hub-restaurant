@@ -7,6 +7,8 @@ import Container from "../ui/Container";
 import { popularDishes } from "../data/popularDishes";
 
 export default function PopularDishesSection() {
+  const featuredDishes = popularDishes.slice(0, 4);
+
   return (
     <section className="section-padding bg-[#100F0D]">
       <Container size="wide">
@@ -28,7 +30,7 @@ export default function PopularDishesSection() {
 
         {/* Dish Cards */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {popularDishes.map((dish) => (
+          {featuredDishes.map((dish) => (
             <article
               key={dish.id}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-[#1B1916] transition-all duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
