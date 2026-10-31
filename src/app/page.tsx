@@ -3,6 +3,7 @@ import Navbar from "./components/layout/Navbar";
 import HeroSection from "./components/sections/HeroSection";
 import CategoriesSection from "./components/sections/CategoriesSection";
 import PopularDishesSection from "./components/sections/PopularDishesSection";
+import DealsSection from "./components/sections/DealsSection";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <HeroSection />
         <CategoriesSection />
         <PopularDishesSection />
+          <DealsSection />
 
       </main>
     </>
