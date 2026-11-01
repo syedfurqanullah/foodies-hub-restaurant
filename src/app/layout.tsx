@@ -23,7 +23,7 @@ const playfair = Playfair_Display({
 });
 
 const restaurantSchema =
-  publicSiteUrl && restaurantConfig.contact.phone && restaurantConfig.contact.address
+  publicSiteUrl && !restaurantConfig.demoMode && restaurantConfig.contact.phone && restaurantConfig.contact.address
     ? {
         "@context": "https://schema.org",
         "@type": "Restaurant",
@@ -58,6 +58,13 @@ export const metadata: Metadata = {
   },
   description: restaurantConfig.description,
   applicationName: restaurantConfig.name,
+  icons: {
+    icon: [
+      { url: "/icons/foodies-hub-favicon.ico", type: "image/x-icon" },
+      { url: "/logo/foodies-hub-icon.png", type: "image/png", sizes: "256x256" },
+    ],
+    apple: "/logo/foodies-hub-icon.png",
+  },
   openGraph: {
     type: "website",
     siteName: restaurantConfig.name,

@@ -7,6 +7,7 @@ import DealsSection from "./components/sections/DealsSection";
 import WhyChooseUsSection from "./components/sections/WhyChooseUsSection";
 import TestimonialsSection from "./components/sections/TestimonialsSection";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
+import HomeGallerySection from "./components/sections/HomeGallerySection";
 
 export default function Home() {
   return (
@@ -14,10 +15,11 @@ export default function Home() {
       <main>
         <HeroSection />
         <HomeDetailsSection />
-        <CategoriesSection />
         <PopularDishesSection />
+        <CategoriesSection />
         <DealsSection />
         <WhyChooseUsSection />
+        <HomeGallerySection />
         <TestimonialsSection />
         <WhatsAppButton />
      

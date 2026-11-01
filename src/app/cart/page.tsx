@@ -180,6 +180,13 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                 </Link>
               </div>
             ) : (
+              <>
+              {restaurantConfig.demoMode && (
+                <div role="note" className="mb-8 rounded-xl border border-amber-300/30 bg-amber-300/10 p-4 sm:p-5">
+                  <p className="text-sm font-bold text-amber-100">Demo order preview - this is not a real order</p>
+                  <p className="mt-1 text-xs leading-5 text-amber-100/70">Sample items, prices, and delivery details only. The cart is saved in this browser. Continuing creates a WhatsApp draft for preview; it is not delivered to a restaurant and no payment is taken.</p>
+                </div>
+              )}
               <div className="grid items-start gap-10 lg:grid-cols-[1fr_380px]">
                 <section>
                   <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
@@ -206,9 +213,9 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                     {cartItems.map((item, index) => (
                       <Reveal key={item.id} delay={index * 0.05}>
                       <article
-                        className="group flex flex-col gap-5 border border-white/10 bg-[#262626] p-4 transition hover:border-[#B89A62]/40 sm:flex-row sm:items-center sm:p-5"
+                        className="group flex flex-col gap-4 border border-white/10 bg-[#262626] p-3 transition hover:border-[#B89A62]/40 sm:flex-row sm:items-center sm:p-4"
                       >
-                        <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-[#333333] sm:aspect-auto sm:h-28 sm:w-32">
+                        <div className="relative aspect-[16/7] max-h-44 w-full shrink-0 overflow-hidden bg-[#333333] sm:aspect-auto sm:h-28 sm:max-h-none sm:w-32">
                           <Image
                             src={item.image}
                             alt={item.name}
@@ -291,7 +298,7 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                   </Link>
                 </section>
 
-                <aside className="border border-white/10 bg-[#262626] p-6 sm:p-8 lg:sticky lg:top-28">
+                <aside className="border border-white/10 bg-[#262626] p-5 sm:p-6 lg:sticky lg:top-28">
                   <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#B89A62]">
                     Your Order
                   </p>
@@ -349,7 +356,7 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                   <form onSubmit={handleCheckout} noValidate className="mt-8 space-y-5">
                     <div className="border-t border-white/10 pt-7">
                       <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#B89A62]">
-                        Delivery Information
+                        Demo Delivery Details
                       </p>
 
                       <div className="space-y-4">
@@ -401,7 +408,7 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                               setCustomerPhone(event.target.value);
                               setFieldErrors((current) => ({ ...current, phone: "" }));
                             }}
-                            placeholder="03XX XXXXXXX"
+                            placeholder="03XX XXX XXXX"
                             className="w-full border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#B89A62]"
                           />
                           {fieldErrors.phone && <p id="customerPhone-error" role="alert" className="mt-1.5 text-xs text-red-300">{fieldErrors.phone}</p>}
@@ -428,7 +435,7 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                               setCustomerAddress(event.target.value);
                               setFieldErrors((current) => ({ ...current, address: "" }));
                             }}
-                            placeholder="Street, area, and city"
+                            placeholder="Street, area, Karachi (sample)"
                             className="w-full resize-y border border-white/15 bg-[#1C1C1C] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#77736e] focus:border-[#B89A62]"
                           />
                           {fieldErrors.address && <p id="customerAddress-error" role="alert" className="mt-1.5 text-xs text-red-300">{fieldErrors.address}</p>}
@@ -484,6 +491,7 @@ ${restaurantConfig.demoMode ? "This is sample demo content. Do not treat it as a
                   </div>
                 </aside>
               </div>
+              </>
             )}
           </div>
         </Container>

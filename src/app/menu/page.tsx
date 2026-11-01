@@ -274,42 +274,42 @@ export default function MenuPage() {
 
             {/* Dish Cards */}
             {filteredDishes.length > 0 ? (
-              <div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="cards-grid-food mt-8 grid gap-3 sm:mt-10 sm:gap-5">
                 {filteredDishes.map((dish, index) => (
                   <Reveal key={dish.id} delay={index * 0.05}>
                   <article
                     data-card-3d
                     id={`dish-${dish.id}`}
-                    className={`group overflow-hidden rounded-xl border bg-[#171713] transition duration-300 hover:border-brand-accent/50 ${highlightedDishId === dish.id ? "border-brand-accent ring-2 ring-brand-accent/40" : "border-white/10"}`}
+                    className={`group flex h-full flex-col overflow-hidden rounded-xl border bg-[#171713] transition duration-300 hover:border-brand-accent/50 ${highlightedDishId === dish.id ? "border-brand-accent ring-2 ring-brand-accent/40" : "border-white/10"}`}
                   >
                     {/* Dish Image */}
-                    <div className="relative aspect-[4/3] overflow-hidden bg-[#211D19]">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-[#211D19]">
                       <Image
                         src={dish.image}
                         alt={dish.name}
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 379px) 100vw, (max-width: 1279px) 50vw, 25vw"
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
 
                       {dish.badge && (
-                        <span className="absolute left-4 top-4 rounded-full bg-brand-accent px-3 py-1 text-xs font-bold text-[#171713]">
+                        <span className="absolute left-2 top-2 rounded-full bg-brand-accent px-2 py-1 text-[9px] font-bold text-[#171713] sm:left-3 sm:top-3 sm:px-2.5 sm:text-[10px]">
                           {dish.badge}
                         </span>
                       )}
                     </div>
 
                     {/* Dish Details */}
-                    <div className="p-5">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">
+                    <div className="flex flex-1 flex-col p-3 sm:p-4">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-brand-accent sm:text-[10px]">
                         {dish.category}
                       </p>
 
-                      <h3 className="mt-2 text-lg font-bold">
+                      <h3 className="mt-1.5 line-clamp-2 min-h-10 text-sm font-semibold sm:mt-2 sm:min-h-12 sm:text-base">
                         {dish.name}
                       </h3>
 
-                      <p className="mt-2 min-h-12 text-sm leading-6 text-white/50">
+                      <p className="mt-1.5 line-clamp-2 min-h-8 text-xs leading-4 text-white/50 sm:mt-2 sm:min-h-9 sm:text-sm sm:leading-5">
                         {dish.description}
                       </p>
 
@@ -321,15 +321,15 @@ export default function MenuPage() {
                         </p>
                       )}
 
-                      <div className="mt-5 flex items-center justify-between gap-3">
-                        <span className="text-lg font-bold text-brand-accent">
+                      <div className="mt-auto flex flex-col items-stretch gap-2 pt-3 min-[480px]:flex-row min-[480px]:items-center min-[480px]:justify-between sm:pt-4">
+                        <span className="text-base font-bold text-brand-accent sm:text-lg">
                           Rs. {dish.price.toLocaleString("en-PK")}
                         </span>
 
                         <button
                           type="button"
                           onClick={() => handleAddToCart(dish)}
-                          className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition ${
+                          className={`inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-[11px] font-bold transition min-[480px]:w-auto min-[480px]:px-2.5 sm:min-h-10 sm:gap-2 sm:px-3 sm:text-xs ${
                             addedDishId === dish.id
                               ? "bg-green-700 text-white"
                               : "bg-brand-accent text-[#171713] hover:bg-amber-700"

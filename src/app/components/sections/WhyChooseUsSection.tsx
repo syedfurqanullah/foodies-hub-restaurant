@@ -62,22 +62,22 @@ export default function WhyChooseUsSection() {
               <Reveal key={feature.title} delay={index * 0.05}>
                 <div
                   data-card-3d
-                  className="group relative h-full overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.045] to-white/[0.015] p-6 transition-all duration-300 hover:border-[#B89A62]/45 sm:p-7"
+                  className="group relative h-full overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.045] to-white/[0.015] p-5 transition-all duration-300 hover:border-[#B89A62]/45 sm:p-6"
                 >
-                  <div className="mb-7 flex items-center justify-between">
-                    <span className="flex size-12 items-center justify-center rounded-xl border border-[#B89A62]/20 bg-[#B89A62]/10 text-[#B89A62] transition-colors duration-300 group-hover:bg-[#B89A62] group-hover:text-[#171713]">
-                      <Icon size={23} strokeWidth={1.7} aria-hidden="true" />
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="flex size-10 items-center justify-center rounded-xl border border-[#B89A62]/20 bg-[#B89A62]/10 text-[#B89A62] transition-colors duration-300 group-hover:bg-[#B89A62] group-hover:text-[#171713] sm:size-11">
+                      <Icon size={21} strokeWidth={1.7} aria-hidden="true" />
                     </span>
                     <span className="font-display text-sm tracking-[0.16em] text-white/25">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                   </div>
 
-                  <h3 className="mb-3 text-lg font-semibold leading-snug sm:text-xl">
+                  <h3 className="mb-2 text-base font-semibold leading-snug sm:text-lg">
                     {feature.title}
                   </h3>
 
-                  <p className="text-sm leading-7 text-[#A8A29A]">
+                  <p className="text-xs leading-6 text-[#A8A29A] sm:text-sm">
                     {feature.description}
                   </p>
                 </div>

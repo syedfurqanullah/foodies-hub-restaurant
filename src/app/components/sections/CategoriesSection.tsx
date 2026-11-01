@@ -38,13 +38,13 @@ export default function CategoriesSection() {
         </div>
 
         {/* Category Cards */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-3">
         
           {categories.map((category, index) => (
             <Reveal key={category.id} delay={index * 0.05}>
             <Link
               href={category.href}
-              className="group relative isolate block min-h-[190px] overflow-hidden rounded-xl border border-white/10 bg-[#25221E] sm:min-h-[240px] lg:min-h-[280px]"
+              className="group relative isolate block aspect-[4/3] h-full overflow-hidden rounded-xl border border-white/10 bg-[#25221E]"
             >
               {/* Category Image */}
               <Image
@@ -59,19 +59,19 @@ export default function CategoriesSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-colors duration-300 group-hover:from-black/95" />
 
               {/* Category Content */}
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-4 sm:p-5">
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:p-4">
                 <div>
-                  <h3 className="font-display text-lg font-semibold text-white sm:text-xl lg:text-2xl">
+                  <h3 className="font-display text-base font-semibold text-white sm:text-lg lg:text-xl">
                     {category.name}
                   </h3>
 
-                  <p className="mt-1 text-xs leading-5 text-white/65 sm:text-sm">
+                  <p className="mt-1 line-clamp-2 text-[10px] leading-4 text-white/65 sm:text-xs sm:leading-5">
                     {category.description}
                   </p>
                 </div>
 
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-[#171713]">
-                  <ArrowUpRight size={17} />
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-[#171713]">
+                  <ArrowUpRight size={15} />
                 </span>
               </div>
             </Link>

@@ -23,10 +23,10 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-5">
           {testimonials.map((testimonial, index) => (
             <Reveal key={testimonial.id} delay={index * 0.06}>
-              <article data-card-3d className="group relative flex h-full min-h-64 flex-col overflow-hidden rounded-xl border border-white/10 bg-[#171713] p-6 transition duration-300 hover:border-brand-accent/40 sm:p-7">
+              <article data-card-3d className="group relative flex h-full min-h-56 flex-col overflow-hidden rounded-xl border border-white/10 bg-[#171713] p-5 transition duration-300 hover:border-brand-accent/40 sm:p-6">
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-8 -top-8 size-28 rounded-full bg-brand-accent/[0.07] blur-2xl transition group-hover:bg-brand-accent/[0.12]"
@@ -41,7 +41,7 @@ export default function TestimonialsSection() {
                   </span>
                 </div>
 
-                <p className="relative mt-6 flex-1 font-display text-lg leading-8 text-[#F4EFE5] sm:text-xl">
+                <p className="relative mt-5 flex-1 font-display text-base leading-7 text-[#F4EFE5] sm:text-lg">
                   “{testimonial.review}”
                 </p>
 

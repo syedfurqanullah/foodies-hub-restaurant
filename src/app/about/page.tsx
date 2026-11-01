@@ -39,7 +39,7 @@ export default function AboutPage() {
 
           <Container size="wide" className="relative">
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-accent">
-              Our Story
+              Our Story · Demo Concept
             </span>
 
             <h1 className="section-heading mt-6 max-w-3xl text-[clamp(2.25rem,9vw,3.75rem)] leading-tight sm:text-6xl lg:text-7xl">
@@ -50,8 +50,7 @@ export default function AboutPage() {
             </h1>
 
             <p className="mt-7 max-w-xl text-base leading-8 text-white/65 sm:text-lg">
-              Discover the passion, care, and love for food behind Foodies Hub.
-              We believe every meal should bring people together.
+              Meet the idea behind Foodies Hub: a modern neighborhood grill built around smoky flavors, generous plates, and time together.
             </p>
 
             <Link
@@ -71,8 +70,8 @@ export default function AboutPage() {
               <div className="relative">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-[#211D19]">
                   <Image
-                    src="/images/hero/hero.jpg"
-                    alt="Food prepared for the Foodies Hub menu"
+                    src="/images/hero/dining-room.jpg"
+                    alt="Warmly lit restaurant dining room"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -91,14 +90,11 @@ export default function AboutPage() {
                 </h2>
 
                 <p className="mt-7 leading-8 text-white/65">
-                  At Foodies Hub, our focus is simple: delicious food, quality
-                  ingredients, and a welcoming experience. We bring together
-                  flavors that make everyday meals feel special.
+                  This sample brand is imagined as a relaxed neighborhood grill, bringing together flame-kissed favorites and familiar comfort food.
                 </p>
 
                 <p className="mt-5 leading-8 text-white/65">
-                  Whether you are sharing a meal with friends or enjoying a
-                  quiet moment, we want every visit to feel worthwhile.
+                  The story, menu, photography, and details on this page are concept content for a restaurant website preview.
                 </p>
               </div>
             </div>
@@ -130,17 +126,17 @@ export default function AboutPage() {
                 return (
                   <Reveal key={value.title} delay={index * 0.06}>
                   <div
-                    className="rounded-xl border border-white/10 bg-[#171713] p-8 transition duration-300 hover:-translate-y-1 hover:border-brand-accent/50"
+                    className="rounded-xl border border-white/10 bg-[#171713] p-5 transition duration-300 hover:-translate-y-1 hover:border-brand-accent/50 sm:p-6"
                   >
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
-                      <Icon size={27} />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
+                      <Icon size={23} />
                     </div>
 
-                    <h3 className="mt-7 text-xl font-bold">
+                    <h3 className="mt-5 text-lg font-bold">
                       {value.title}
                     </h3>
 
-                    <p className="mt-4 text-sm leading-7 text-white/60">
+                    <p className="mt-3 text-sm leading-6 text-white/60">
                       {value.description}
                     </p>
                   </div>

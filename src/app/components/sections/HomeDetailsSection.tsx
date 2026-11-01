@@ -37,10 +37,10 @@ export default function HomeDetailsSection() {
 
           <Reveal delay={0.12} className="sm:justify-self-end">
             <Link
-              href="/contact"
+              href="/contact#reservation"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-accent transition hover:text-[#D0B77F]"
             >
-              Reservations and enquiries <ArrowUpRight size={16} />
+              Reserve a Table <ArrowUpRight size={16} />
             </Link>
           </Reveal>
         </div>

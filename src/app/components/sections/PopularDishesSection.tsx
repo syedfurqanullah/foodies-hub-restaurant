@@ -8,7 +8,10 @@ import { popularDishes } from "../data/popularDishes";
 import Reveal from "../ui/Reveal";
 
 export default function PopularDishesSection() {
-  const featuredDishes = popularDishes.slice(0, 4);
+  const featuredIds = ["ember-house-burger", "charred-garden-pizza", "pesto-farfalle", "smoky-grill-platter"];
+  const featuredDishes = featuredIds
+    .map((id) => popularDishes.find((dish) => dish.id === id))
+    .filter((dish) => dish !== undefined);
 
   return (
     <section className="section-padding bg-[#171713]">
@@ -24,49 +27,48 @@ export default function PopularDishesSection() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/60 sm:text-base">
-            A sample selection of dishes and prices. Swap these for the restaurant’s
-            verified signature items before presenting a personalized preview.
+            Flame-grilled favorites and comfort food from our sample menu. Dish names, photos, and prices are illustrative.
           </p>
         </div>
 
         {/* Dish Cards */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        <div className="cards-grid-food grid gap-3 sm:gap-5">
           {featuredDishes.map((dish, index) => (
             <Reveal key={dish.id} delay={index * 0.06}>
             <article
               data-card-3d
-              className="group overflow-hidden rounded-xl border border-white/10 bg-[#1B1916] transition-all duration-300 hover:border-brand-accent/50"
+              className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#1B1916] transition-all duration-300 hover:border-brand-accent/50"
             >
               {/* Dish Image */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#25221E]">
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#25221E]">
                 <Image
                   src={dish.image}
                   alt={dish.name}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  sizes="(max-width: 379px) 100vw, (max-width: 1279px) 50vw, 25vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
                 {/* Optional Badge */}
                 {dish.badge && (
-                  <span className="absolute left-3 top-3 rounded-full bg-brand-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#171713]">
+                  <span className="absolute left-2 top-2 rounded-full bg-brand-accent px-2 py-1 text-[9px] font-semibold uppercase tracking-wider text-[#171713] sm:left-3 sm:top-3 sm:px-2.5 sm:text-[10px]">
                     {dish.badge}
                   </span>
                 )}
               </div>
 
               {/* Dish Details */}
-              <div className="p-4 sm:p-5">
-                <h3 className="font-display text-lg font-semibold text-[#F4EFE5]">
+              <div className="flex flex-1 flex-col p-3 sm:p-4">
+                <h3 className="line-clamp-2 min-h-10 font-display text-sm font-semibold text-[#F4EFE5] sm:min-h-12 sm:text-base">
                   {dish.name}
                 </h3>
 
-                <p className="mt-2 min-h-10 text-xs leading-5 text-white/55 sm:text-sm">
+                <p className="mt-1.5 line-clamp-2 min-h-8 text-[11px] leading-4 text-white/55 sm:mt-2 sm:min-h-9 sm:text-xs sm:leading-5">
                   {dish.description}
                 </p>
 
-                <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
-                  <span className="text-base font-bold text-brand-accent">
+                <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/10 pt-3">
+                  <span className="text-sm font-bold text-brand-accent sm:text-base">
                     Rs. {dish.price.toLocaleString("en-PK")}
                   </span>
 

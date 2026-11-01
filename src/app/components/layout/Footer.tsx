@@ -57,13 +57,16 @@ export default function Footer() {
           </div>
         </section>
 
-        <div className="grid gap-x-8 gap-y-10 border-t border-white/10 py-12 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10 sm:py-14 lg:grid-cols-[1.2fr_1fr_0.75fr_0.85fr_1fr] lg:gap-10 lg:py-16">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="group inline-flex items-center gap-3">
-              <span className="relative h-11 w-11 overflow-hidden rounded-full border border-white/10 bg-white/5">
-                <Image src={restaurantConfig.logo} alt="" fill sizes="44px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              </span>
-              <span className="font-display text-xl font-semibold tracking-tight">
+        <div className="grid gap-x-8 gap-y-10 border-t border-white/10 py-12 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10 sm:py-14 xl:grid-cols-[1.2fr_1fr_0.75fr_0.85fr_1fr] xl:gap-10 xl:py-16">
+          <div className="sm:col-span-2 xl:col-span-1">
+            <Link href="/" aria-label={restaurantConfig.name} className="group inline-flex items-center">
+              <div
+                className="shrink-0 overflow-hidden rounded-full border border-brand-accent/65 bg-[#11110F] shadow-lg shadow-brand-accent/10 transition-all duration-500 ease-out group-hover:scale-110 group-hover:-rotate-3 group-hover:border-brand-accent group-hover:shadow-brand-accent/30"
+                style={{ width: 56, height: 56, flex: "0 0 56px", overflow: "hidden", borderRadius: "50%" }}
+              >
+                <Image src={restaurantConfig.logo} alt={restaurantConfig.name} width={1536} height={1024} unoptimized style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+              </div>
+              <span className="font-display text-lg font-semibold tracking-tight text-[#F4EFE5] transition-colors duration-300 group-hover:text-brand-accent">
                 {restaurantConfig.name}<span className="ml-1 text-brand-accent">.</span>
               </span>
             </Link>
@@ -157,7 +160,7 @@ export default function Footer() {
             <ul className="mt-5 space-y-4 text-sm text-white/60">
               <li className="flex items-start gap-3">
                 <MapPin size={17} className="mt-0.5 shrink-0 text-brand-accent" />
-                {restaurantConfig.contact.address ? (
+                {restaurantConfig.contact.address && !restaurantConfig.demoMode ? (
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurantConfig.contact.address)}`}
                     target="_blank"
@@ -166,26 +169,32 @@ export default function Footer() {
                   >
                     {restaurantConfig.contact.address}
                   </a>
+                ) : restaurantConfig.contact.address ? (
+                  <span className="min-w-0 [overflow-wrap:anywhere] text-white/45">{restaurantConfig.contact.address} (illustrative area only)</span>
                 ) : (
                   <span className="text-white/45">Location to be confirmed</span>
                 )}
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={17} className="shrink-0 text-brand-accent" />
-                {restaurantConfig.contact.phone ? (
+                {restaurantConfig.contact.phone && !restaurantConfig.demoMode ? (
                   <a href={`tel:${restaurantConfig.contact.phone.replace(/\s/g, "")}`} className="transition hover:text-[#F4EFE5]">
                     {restaurantConfig.contact.phone}
                   </a>
+                ) : restaurantConfig.contact.phone ? (
+                  <span className="min-w-0 [overflow-wrap:anywhere] text-white/45">Demo only: {restaurantConfig.contact.phone}</span>
                 ) : (
                   <span className="text-white/45">Phone to be confirmed</span>
                 )}
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={17} className="shrink-0 text-brand-accent" />
-                {restaurantConfig.contact.email ? (
+                {restaurantConfig.contact.email && !restaurantConfig.demoMode ? (
                   <a href={`mailto:${restaurantConfig.contact.email}`} className="break-all transition hover:text-[#F4EFE5]">
                     {restaurantConfig.contact.email}
                   </a>
+                ) : restaurantConfig.contact.email ? (
+                  <span className="min-w-0 break-all text-white/45">{restaurantConfig.contact.email}</span>
                 ) : (
                   <span className="text-white/45">Email to be confirmed</span>
                 )}

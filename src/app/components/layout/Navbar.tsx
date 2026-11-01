@@ -19,6 +19,7 @@ import Container from "../ui/Container";
 const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "Menu", href: "/menu" },
+  { label: "Deals", href: "/deals" },
   { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
@@ -56,26 +57,29 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#171713]/95 text-white backdrop-blur-xl">
       <Container size="wide">
-        <div className="flex h-20 items-center justify-between gap-5">
+        <div className="flex h-20 items-center justify-between gap-3 sm:gap-5">
 
           {/* Logo */}
           <Link
             href="/"
-            className="group flex shrink-0 items-center gap-3"
+            className="group flex shrink-0 items-center gap-2"
           >
-            <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/10 transition duration-300 group-hover:scale-105 group-hover:border-brand-accent">
+            <div
+              className="shrink-0 overflow-hidden rounded-full border border-brand-accent/65 bg-[#11110F] shadow-lg shadow-brand-accent/10 transition-all duration-300 ease-out group-hover:scale-110 group-hover:-rotate-3 group-hover:border-brand-accent group-hover:shadow-brand-accent/30"
+              style={{ width: 56, height: 56, flex: "0 0 56px", overflow: "hidden", borderRadius: "50%" }}
+            >
               <Image
-                src="/logo/foodies-hub-logo.png"
+                src="/logo/foodies-hub-logo.png?v=2"
                 alt="Foodies Hub"
-                fill
-                sizes="44px"
-                className="object-cover"
+                width={1536}
+                height={1024}
+                priority
+                unoptimized
+                style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
               />
             </div>
-
-            <span className="hidden text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-brand-accent sm:inline">
-              Foodies{" "}
-              <span className="text-brand-accent">Hub.</span>
+            <span className="whitespace-nowrap text-sm font-semibold tracking-tight text-[#F4EFE5] transition-colors duration-300 group-hover:text-brand-accent sm:text-base">
+              Foodies <span className="text-brand-accent">Hub.</span>
             </span>
           </Link>
 
@@ -104,7 +108,7 @@ export default function Navbar() {
               href="/menu?focus=search"
               onClick={focusMenuSearch}
               aria-label="Search menu"
-              className="flex h-11 w-11 items-center justify-center text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-xl text-white/75 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-brand-accent"
             >
               <Search size={21} />
             </Link>
@@ -139,14 +143,14 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
 
             {/* Mobile Search */}
             <Link
               href="/menu?focus=search"
               onClick={focusMenuSearch}
               aria-label="Search menu"
-              className="flex h-11 w-11 items-center justify-center text-white/80 transition-colors duration-300 hover:text-brand-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 transition-colors duration-300 hover:text-brand-accent"
             >
               <Search size={21} />
             </Link>

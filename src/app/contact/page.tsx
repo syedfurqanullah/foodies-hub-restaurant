@@ -1,38 +1,40 @@
 
 "use client";
 
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Container from "../components/ui/Container";
 import { restaurantConfig } from "../components/config/restaurant";
 import Reveal from "../components/ui/Reveal";
+import ReservationPreview from "../components/sections/ReservationPreview";
 
 const contactDetails = [
   {
     title: "Call Us",
-    value: restaurantConfig.contact.phone || "Added after restaurant approval",
-    link: restaurantConfig.contact.phone
+    value: restaurantConfig.demoMode ? `Demo only: ${restaurantConfig.contact.phone} (not connected)` : restaurantConfig.contact.phone || "Contact to be confirmed",
+    link: !restaurantConfig.demoMode && restaurantConfig.contact.phone
       ? `tel:${restaurantConfig.contact.phone.replace(/\s/g, "")}`
       : null,
-    description: "Demo contact detail is not configured.",
+    description: restaurantConfig.demoMode ? "Demo detail; no call will be placed." : "Call the restaurant.",
   },
   {
     title: "Email Us",
-    value: restaurantConfig.contact.email || "Added after restaurant approval",
-    link: restaurantConfig.contact.email
+    value: restaurantConfig.demoMode ? `${restaurantConfig.contact.email} (demo only)` : restaurantConfig.contact.email || "Contact to be confirmed",
+    link: !restaurantConfig.demoMode && restaurantConfig.contact.email
       ? `mailto:${restaurantConfig.contact.email}`
       : null,
-    description: "Demo contact detail is not configured.",
+    description: restaurantConfig.demoMode ? "Demo detail; no email will be sent." : "Email the restaurant.",
   },
   {
     title: "Visit Us",
-    value: restaurantConfig.contact.address || "Added after restaurant approval",
-    link: "#location",
-    description: "We look forward to welcoming you.",
+    value: restaurantConfig.demoMode ? `${restaurantConfig.contact.address} - illustrative area only` : restaurantConfig.contact.address || "Address to be confirmed",
+    link: !restaurantConfig.demoMode && restaurantConfig.contact.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurantConfig.contact.address)}` : null,
+    description: restaurantConfig.demoMode ? "Illustrative area only; this is not a real restaurant location." : "Get directions.",
   },
 ];
 
 export default function ContactPage() {
+  const [formNotice, setFormNotice] = useState("");
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -44,6 +46,10 @@ export default function ContactPage() {
       String(formData.get("message") ?? ""),
     ].join("\n");
 
+    if (restaurantConfig.demoMode || !restaurantConfig.contact.email) {
+      setFormNotice("Demo only: your message was not sent. A restaurant email address will be connected after approval.");
+      return;
+    }
     window.location.href = `mailto:${restaurantConfig.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
@@ -57,7 +63,7 @@ export default function ContactPage() {
           <Container>
             <div className="relative py-24 text-center md:py-32">
               <span className="text-sm font-semibold uppercase tracking-[0.3em] text-[#B89A62]">
-                Get In Touch
+                Get In Touch · Demo details
               </span>
 
               <h1 className="mx-auto mt-5 max-w-3xl font-serif text-[clamp(2.25rem,9vw,3.75rem)] leading-tight md:text-7xl">
@@ -100,7 +106,7 @@ export default function ContactPage() {
                         <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#B89A62]/10 text-[#B89A62]">
                           <Icon size={21} aria-hidden="true" />
                         </span>
-                        <span>
+                        <span className="min-w-0 [overflow-wrap:anywhere]">
                           <span className="block text-sm font-semibold">{item.title}</span>
                           <span className="mt-1 block text-sm text-[#B89A62]">{item.value}</span>
                           <span className="mt-1 block text-xs text-white/40">{item.description}</span>
@@ -111,11 +117,11 @@ export default function ContactPage() {
                     return (
                       <Reveal key={item.title} delay={index * 0.06}>
                         {item.link ? (
-                          <a href={item.link} className="group flex min-h-20 items-center gap-5 rounded-xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#B89A62]/50 hover:bg-white/[0.06]">
+                          <a href={item.link} target={item.title === "Visit Us" ? "_blank" : undefined} rel={item.title === "Visit Us" ? "noreferrer" : undefined} className="group flex min-h-18 items-center gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-[#B89A62]/50 hover:bg-white/[0.06]">
                             {content}
                           </a>
                         ) : (
-                          <div className="flex min-h-20 items-center gap-5 rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                          <div className="flex min-h-18 items-center gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-4">
                             {content}
                           </div>
                         )}
@@ -126,7 +132,7 @@ export default function ContactPage() {
               </div>
 
               {/* Contact form */}
-              <Reveal className="rounded-xl border border-white/10 bg-[#1B1B1B] p-6 md:p-10" delay={0.12}>
+              <Reveal className="rounded-xl border border-white/10 bg-[#1B1B1B] p-5 sm:p-7 lg:p-8" delay={0.12}>
                 <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B89A62]">
                   Send a Message
                 </span>
@@ -205,10 +211,11 @@ export default function ContactPage() {
                     Send Message →
                   </button>
 
+                  {formNotice && <p role="status" className="rounded-lg border border-[#B89A62]/25 bg-[#B89A62]/10 p-3 text-center text-xs leading-5 text-[#DCC99E]">{formNotice}</p>}
                   <p className="text-center text-xs text-white/45">
-                    {restaurantConfig.contact.email
+                    {!restaurantConfig.demoMode && restaurantConfig.contact.email
                       ? "This opens your email app with the message prepared. You will need to send it there."
-                      : "Demo only: this email draft has no recipient. The restaurant email will be added after approval."}
+                      : "Demo only: submitting shows a preview confirmation. No message is sent or stored."}
                   </p>
                 </form>
               </Reveal>
@@ -216,17 +223,30 @@ export default function ContactPage() {
           </Container>
         </section>
 
-        {/* Location placeholder */}
+        <ReservationPreview />
+
+        {/* Illustrative Karachi area */}
         <section id="location" className="border-t border-white/10 py-16">
           <Container>
-            <div className="rounded-xl border border-white/10 bg-[#1B1B1B] p-8 text-center md:p-14">
-              <span className="text-3xl text-[#B89A62]">⌖</span>
+            <div className="rounded-xl border border-white/10 bg-[#1B1B1B] p-6 text-center sm:p-8 lg:p-10">
+              <MapPin size={28} className="mx-auto text-[#B89A62]" aria-hidden="true" />
               <h2 className="mt-4 font-serif text-3xl">
                 Find Our Location
               </h2>
               <p className="mt-3 text-sm text-white/50">
                 {restaurantConfig.contact.address || "Location added after restaurant approval"}
               </p>
+              <p className="mt-2 text-xs leading-5 text-white/40">Illustrative area only; this map shows the general Clifton area in Karachi, not a real restaurant location.</p>
+              <div className="relative mx-auto mt-6 aspect-video w-full max-w-3xl overflow-hidden rounded-xl border border-white/10 bg-[#111]">
+                <iframe
+                  title="Illustrative map of Clifton, Karachi"
+                  src="https://maps.google.com/maps?q=Clifton%2C%20Karachi&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  className="absolute inset-0 h-full w-full border-0 grayscale-[0.45]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
             </div>
           </Container>
         </section>

@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, ShoppingCart, Tag } from "lucide-react";
+import { ArrowRight, Check, ShoppingCart } from "lucide-react";
 
 import Container from "../components/ui/Container";
 import { deals } from "../components/data/deals";
@@ -68,8 +68,7 @@ export default function DealsPage() {
             </h1>
 
             <p className="mt-6 max-w-xl leading-8 text-white/60">
-              Enjoy your favorite flavors with our special food offers.
-              Great food makes every moment better.
+              Example bundles for the restaurant concept. Every offer and price on this page is sample content, not a live promotion.
             </p>
 
             <Link
@@ -95,12 +94,11 @@ export default function DealsPage() {
               </h2>
 
               <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/50">
-                Discover delicious combinations and enjoy special
-                prices on selected favorites.
+                Bundle contents, discounts, prices, and availability are illustrative and must be confirmed by a restaurant before use.
               </p>
             </div>
 
-            <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="cards-grid-deals mx-auto grid max-w-6xl gap-3 sm:gap-5">
               {deals.map((deal, index) => {
                 const isAdded = addedDealId === deal.id;
 
@@ -109,58 +107,40 @@ export default function DealsPage() {
                   <article
                     data-card-3d
                     id={`deal-${deal.id}`}
-                    className={`group overflow-hidden rounded-xl border bg-[#171713] transition duration-300 hover:border-brand-accent/50 ${highlightedDealId === deal.id ? "border-brand-accent ring-2 ring-brand-accent/40" : "border-white/10"}`}
+                    className={`group flex h-full flex-col overflow-hidden rounded-xl border bg-[#211f1a] text-[#F4EFE5] shadow-lg shadow-black/20 transition duration-300 hover:border-brand-accent/55 ${highlightedDealId === deal.id ? "border-brand-accent ring-2 ring-brand-accent/40" : "border-white/10"}`}
                   >
                     {/* Deal Image */}
-                    <div className="relative aspect-[4/3] overflow-hidden bg-[#211D19]">
+                    <div className="relative aspect-[16/9] overflow-hidden bg-[#211D19]">
                       <Image
                         src={deal.image}
                         alt={deal.name}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition duration-700 group-hover:scale-110"
+                        className="object-cover transition duration-700 group-hover:scale-105"
                       />
-
-                      <span className="absolute left-4 top-4 rounded-full bg-brand-accent px-3 py-1.5 text-xs font-bold text-[#171713]">
-                        {deal.discount}
-                      </span>
-
-                      <span className="absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
-                        {deal.badge}
-                      </span>
                     </div>
 
                     {/* Deal Details */}
-                    <div className="p-5">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-accent">
-                        <Tag size={14} />
-                        Special Deal
-                      </div>
-
-                      <h3 className="mt-3 text-xl font-bold text-[#F4EFE5]">
-                        {deal.name}
-                      </h3>
-
-                      <p className="mt-3 min-h-12 text-sm leading-6 text-white/50">
+                    <div className="flex flex-1 flex-col p-3 sm:p-4">
+                      <h2 className="min-h-10 font-display text-sm font-semibold leading-5 text-[#F4EFE5] sm:text-lg">{deal.name}</h2>
+                      <p className="mt-1 line-clamp-2 min-h-8 text-[10px] leading-4 text-white/60 sm:mt-2 sm:min-h-9 sm:text-xs sm:leading-5">
                         {deal.description}
                       </p>
+                      <p className="mt-1 line-clamp-2 min-h-8 text-[8px] leading-4 text-white/40 sm:mt-2 sm:text-[10px]">{deal.terms}</p>
 
-                      {/* Pricing */}
-                      <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-5">
-                        <span className="text-xl font-bold text-brand-accent">
-                          Rs. {deal.discountedPrice.toLocaleString("en-PK")}
-                        </span>
-
-                        <span className="text-sm text-white/40 line-through">
-                          Rs. {deal.originalPrice.toLocaleString("en-PK")}
-                        </span>
+                      <div className="mt-auto flex items-end justify-between gap-3 border-t border-white/10 pt-4">
+                        <div>
+                          <span className="block text-[8px] font-semibold uppercase tracking-wider text-white/40 sm:text-[9px]">Sample price · PKR</span>
+                          <span className="text-[9px] text-white/40 line-through sm:text-[10px]">Rs. {deal.originalPrice.toLocaleString("en-PK")}</span>
+                          <p className="text-lg font-bold text-brand-accent sm:text-xl">Rs. {deal.discountedPrice.toLocaleString("en-PK")}</p>
+                        </div>
                       </div>
 
                       {/* Add to Cart */}
                       <button
                         type="button"
                         onClick={() => handleAddToCart(deal)}
-                        className={`mt-5 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold transition ${
+                        className={`mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-button px-5 py-3 text-sm font-semibold transition ${
                           isAdded
                             ? "bg-green-700 text-white"
                             : "bg-brand-accent text-[#171713] hover:bg-amber-700"

@@ -8,37 +8,41 @@ export interface Deal {
   discount: string;
   image: string;
   badge: string;
+  terms: string;
 }
 
 export const deals: Deal[] = [
   {
     id: "burger-combo",
-    name: "Burger Combo",
-    description: "Classic beef burger with fries and a cold drink.",
-    originalPrice: 1200,
+    name: "Premium Burger Deal",
+    description: "One premium burger, fries, and one drink.",
+    originalPrice: 1399,
     discountedPrice: 999,
-    discount: "17% OFF",
-    image: "/images/deals/burger-combo.jpg",
+    discount: "30% OFF",
+    image: "/images/deals/burger-combo.png",
     badge: "Best Value",
+    terms: "Sample bundle and price. Item size, availability, and promotion dates are illustrative.",
   },
   {
     id: "pizza-combo",
-    name: "Pizza Feast",
-    description: "Delicious pizza with a refreshing drink.",
-    originalPrice: 1600,
-    discountedPrice: 1299,
-    discount: "19% OFF",
-    image: "/images/deals/pizza-combo.jpg",
+    name: "Pizza & Drink Deal",
+    description: "One large pizza and one drink.",
+    originalPrice: 1499,
+    discountedPrice: 999,
+    discount: "33% OFF",
+    image: "/images/deals/pizza-combo.png",
     badge: "Popular Deal",
+    terms: "Sample bundle and price. Pizza size, drink choice, availability, and dates are illustrative.",
   },
   {
     id: "family-feast",
-    name: "Family Feast",
-    description: "A satisfying meal to share with your family.",
-    originalPrice: 2800,
-    discountedPrice: 2399,
-    discount: "14% OFF",
-    image: "/images/deals/family-feast.jpg",
-    badge: "Family Favorite",
+    name: "BBQ Platter Deal",
+    description: "A mixed BBQ platter, freshly grilled and made for sharing.",
+    originalPrice: 2199,
+    discountedPrice: 1499,
+    discount: "32% OFF",
+    image: "/images/deals/brbq-feast.png",
+    badge: "Grill Favorite",
+    terms: "Sample bundle and price. Platter contents, portions, availability, and dates are illustrative.",
   },
 ];

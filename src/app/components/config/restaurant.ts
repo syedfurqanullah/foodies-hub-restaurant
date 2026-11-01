@@ -4,25 +4,25 @@ import type { RestaurantConfig } from "../types/restaurant";
 export const restaurantConfig: RestaurantConfig = {
   demoMode: true,
   name: "Foodies Hub",
-  tagline: "Good Food. Great Moments.",
+  tagline: "Fire-kissed plates. Good times.",
   description:
-    "Explore the Foodies Hub restaurant website concept, with sample menu dishes, prices, and meal offers.",
+    "A modern Karachi neighborhood grill and kitchen concept serving flame-grilled favorites, comfort food, and relaxed dining.",
 
-  logo: "/logo/foodies-hub-logo.png",
-  heroImage: "/images/hero/hero.jpg",
-  socialPreviewImage: "/images/og/foodies-hub-preview.jpg",
+  logo: "/logo/foodies-hub-logo.png?v=2",
+  heroImage: "/images/hero/restaurant-interior.jpg",
+  socialPreviewImage: "/images/hero/restaurant-interior.jpg",
 
   contact: {
-    phone: "",
+    phone: "+92 21 0000 0000",
     whatsapp: "",
-    email: "",
-    address: "",
+    email: "hello@foodieshub.example",
+    address: "Clifton, Karachi",
   },
   deliveryFee: null,
 
   openingHours: [
     {
-      days: "Monday - Sunday",
+      days: "Daily (sample)",
       openingTime: "12:00 PM",
       closingTime: "11:00 PM",
     },
