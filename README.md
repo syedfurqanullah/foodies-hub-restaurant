@@ -1,71 +1,119 @@
-# Foodies Hub Restaurant Website
+# Foodies Hub — Restaurant Website
 
-A responsive restaurant website concept built with Next.js, React, TypeScript, and Tailwind CSS. It includes restaurant pages, a sample menu, deals, a gallery, and an interactive cart preview.
+A modern, responsive restaurant website demo built with **Next.js, React, TypeScript, and Tailwind CSS**. Foodies Hub showcases a polished restaurant experience with menu browsing, special deals, a food gallery, and an interactive shopping cart.
+
+## Live Demo
+
+[View Live Website](https://foodies-hub-restaurant.vercel.app/)
 
 ## Features
 
-- Responsive home, menu, deals, about, gallery, contact, and cart pages
-- Menu search, category filters, and item links
-- Cart quantity controls with browser storage
-- Local order preview for the sample checkout flow; no order is sent or stored
-- Page metadata, social preview images, sitemap, and robots rules
-- Subtle card motion with reduced-motion support
+- **Responsive Design** — Optimized for desktop, tablet, and mobile devices.
+- **Restaurant Pages** — Home, Menu, Deals, About, Gallery, Contact, and Cart.
+- **Menu Browsing** — Explore food items with search and category filtering.
+- **Special Deals** — Browse featured restaurant offers and combo deals.
+- **Interactive Cart** — Add items, update quantities, and remove products.
+- **Cart Persistence** — Cart data is saved in the browser using LocalStorage.
+- **Order Preview** — Review order details through a local checkout preview.
+- **Contact & Reservation UI** — Forms demonstrate the intended user experience.
+- **SEO Setup** — Metadata, sitemap, robots rules, and social preview support.
+- **Smooth UI Details** — Subtle animations with reduced-motion support.
+
+## Tech Stack
+
+- **Framework:** Next.js
+- **Library:** React
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide React
+- **Storage:** Browser LocalStorage
+- **Deployment:** Vercel
 
 ## Getting Started
 
-Install dependencies and start the local server:
+Clone the repository:
+
+```bash
+git clone https://github.com/syedfurqanullah/foodies-hub-restaurant.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd foodies-hub-restaurant
+```
+
+Install dependencies:
 
 ```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Demo Mode
-
-The project starts with `demoMode: true`. The restaurant details, menu, prices, deals, photos, and reviews are sample content. The cart is stored in the visitor's browser. Checkout shows a local order preview; it does not send an order or store customer details. Reservation and contact forms also show a preview and do not send data to a server.
-
-## Customize for a Restaurant
-
-Update `src/app/components/config/restaurant.ts` with details approved by the restaurant. Replace sample menu and deal content in `src/app/components/data/`. Use restaurant-approved photos and verified reviews.
-
-Confirm all business details before sharing a preview, including contact information, opening hours, delivery areas, menu prices, dietary tags, allergens, and delivery fees. Do not add dietary or allergen claims until the restaurant verifies them.
-
-Keep `demoMode: true` for previews. Set it to `false` only after the restaurant approves the content and the WhatsApp number is verified.
-
-## Production SEO
-
-Set `NEXT_PUBLIC_SITE_URL` to the final website address, for example:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://your-restaurant-domain.com
-```
-
-Canonical URLs, the sitemap, and search indexing are enabled only when `demoMode` is `false` and the site URL is valid. Restaurant structured data also needs an approved phone number and address. The cart page stays out of search results.
-
-## Ordering Limitations
-
-This project is currently a frontend demo. It does not include an order database, admin dashboard, online payments, delivery-zone checks, or order tracking. Add and verify these services before using the site for automated production ordering.
-
-## Scripts
+## Available Scripts
 
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Start the development server |
-| `npm run lint` | Run ESLint |
 | `npm run build` | Create a production build |
-| `npm run start` | Run the production build locally |
+| `npm run start` | Run the production build |
+| `npm run lint` | Run ESLint |
 
 ## Project Structure
 
-- `src/app/` - pages, metadata, sitemap, robots rules, and global styles
-- `src/app/components/config/` - restaurant and WhatsApp settings
-- `src/app/components/data/` - sample dishes, deals, gallery images, and reviews
-- `src/app/components/layout/` - navigation, footer, and cart feedback
-- `src/app/components/sections/` - homepage sections and reservation preview
-- `src/app/components/ui/` - reusable interface components and motion
-- `src/app/components/context/` - shared cart state
-- `src/app/components/types/` - shared TypeScript models
-- `src/app/components/utils/` - formatting and other shared helpers
-- `public/images/` - demo photos and social preview image
+```text
+src/
+└── app/
+    ├── components/
+    │   ├── config/
+    │   ├── context/
+    │   ├── data/
+    │   ├── layout/
+    │   ├── sections/
+    │   ├── types/
+    │   ├── ui/
+    │   └── utils/
+    ├── about/
+    ├── cart/
+    ├── contact/
+    ├── deals/
+    ├── gallery/
+    ├── menu/
+    ├── globals.css
+    ├── layout.tsx
+    ├── page.tsx
+    ├── robots.ts
+    └── sitemap.ts
+
+public/
+└── images/
+```
+
+## Demo Notice
+
+Foodies Hub is currently a **frontend demonstration project**. Restaurant details, menu items, prices, deals, images, and reviews are sample content.
+
+The cart and checkout flow are for demonstration purposes only. Orders are not submitted to a restaurant or stored on a server. Contact and reservation forms also display a preview instead of sending real submissions.
+
+The project does not currently include a backend database, admin dashboard, online payment integration, delivery-zone validation, or order tracking.
+
+## Customization
+
+The demo can be adapted for a real restaurant by updating its approved business information, menu, pricing, images, contact details, and opening hours.
+
+All restaurant information should be verified before using the website in a production environment.
+
+## Author
+
+**Furqan**
+
+- [GitHub](https://github.com/syedfurqanullah)
+- [Portfolio](https://syedfurqanullah.netlify.app/)
+- [LinkedIn](https://www.linkedin.com/in/furqan-ullah/)

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { restaurantConfig } from "./components/config/restaurant";
 
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const configuredSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://foodies-hub-restaurant.vercel.app";
 
 export const deploymentSiteUrl = (() => {
   if (!configuredSiteUrl) return undefined;
@@ -15,9 +16,9 @@ export const deploymentSiteUrl = (() => {
   }
 })();
 
-export const publicSiteUrl = restaurantConfig.demoMode
-  ? undefined
-  : deploymentSiteUrl;
+// Published demo pages can be indexed; keep restaurant structured data disabled
+// separately while demoMode is true.
+export const publicSiteUrl = deploymentSiteUrl;
 
 export function pageMetadata(
   title: string,
