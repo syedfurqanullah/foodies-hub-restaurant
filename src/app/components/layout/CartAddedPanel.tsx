@@ -6,8 +6,7 @@ import Link from "next/link";
 import { Check, ShoppingBag, X } from "lucide-react";
 
 import { useCart } from "../context/CartContext";
-
-const formatPrice = (price: number) => `Rs. ${price.toLocaleString("en-PK")}`;
+import { formatPrice } from "../utils/formatPrice";
 
 export default function CartAddedPanel() {
   const {

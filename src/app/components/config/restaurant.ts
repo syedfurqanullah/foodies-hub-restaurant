@@ -4,11 +4,11 @@ import type { RestaurantConfig } from "../types/restaurant";
 export const restaurantConfig: RestaurantConfig = {
   demoMode: true,
   name: "Foodies Hub",
-  tagline: "Fire-kissed plates. Good times.",
+  tagline: "Good food. Good company.",
   description:
-    "A modern Karachi neighborhood grill and kitchen concept serving flame-grilled favorites, comfort food, and relaxed dining.",
+    "A Karachi neighborhood grill concept serving burgers, pizza, pasta, barbecue, and familiar sides.",
 
-  logo: "/logo/foodies-hub-logo.png?v=2",
+  logo: "/logo/foodies-hub-logo.webp",
   heroImage: "/images/hero/restaurant-interior.jpg",
   socialPreviewImage: "/images/hero/restaurant-interior.jpg",
 
@@ -22,17 +22,10 @@ export const restaurantConfig: RestaurantConfig = {
 
   openingHours: [
     {
-      days: "Daily (sample)",
+      days: "Daily",
       openingTime: "12:00 PM",
       closingTime: "11:00 PM",
     },
   ],
 
-  theme: {
-    primary: "#171713",
-    secondary: "#F4EFE4",
-    accent: "#B89A62",
-    background: "#171713",
-    foreground: "#F4EFE4",
-  },
 };

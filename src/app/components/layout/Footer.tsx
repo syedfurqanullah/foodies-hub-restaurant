@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#171713] text-[#F4EFE5]">
       <Container size="wide">
-        <section className="relative isolate my-8 grid gap-6 overflow-hidden rounded-xl border border-brand-accent/25 bg-gradient-to-br from-[#211f1a] to-[#171713] px-6 py-7 sm:my-10 sm:grid-cols-[1fr_auto] sm:items-center sm:px-9 sm:py-8">
+        <section className="relative isolate my-8 grid gap-6 overflow-hidden rounded-xl border border-brand-accent/25 bg-gradient-to-br from-[#211f1a] to-[#171713] px-6 py-7 sm:my-10 sm:px-9 sm:py-8 xl:grid-cols-2 xl:items-center">
           <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-24 -z-10 h-56 w-56 rounded-full bg-brand-accent/10 blur-3xl" />
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-accent">
@@ -36,11 +36,11 @@ export default function Footer() {
             <p className="mt-2 max-w-xl text-sm leading-6 text-white/60">
               {restaurantConfig.demoMode
                 ? "Browse the sample menu and explore this restaurant website concept."
-                : "Explore the menu and find your new favorite."}
+                : "Browse the menu and choose a meal."}
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/menu"
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-button bg-brand-accent px-5 py-3 text-sm font-semibold text-[#171713] transition hover:bg-[#9c7d48]"
@@ -57,14 +57,11 @@ export default function Footer() {
           </div>
         </section>
 
-        <div className="grid gap-x-8 gap-y-10 border-t border-white/10 py-12 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10 sm:py-14 xl:grid-cols-[1.2fr_1fr_0.75fr_0.85fr_1fr] xl:gap-10 xl:py-16">
-          <div className="sm:col-span-2 xl:col-span-1">
+        <div className="footer-main-layout flex min-w-0 flex-col gap-y-8 border-t border-white/10 py-10 sm:gap-y-9 sm:py-12 xl:py-14">
+          <div className="min-w-0">
             <Link href="/" aria-label={restaurantConfig.name} className="group inline-flex items-center">
-              <div
-                className="shrink-0 overflow-hidden rounded-full border border-brand-accent/65 bg-[#11110F] shadow-lg shadow-brand-accent/10 transition-all duration-500 ease-out group-hover:scale-110 group-hover:-rotate-3 group-hover:border-brand-accent group-hover:shadow-brand-accent/30"
-                style={{ width: 56, height: 56, flex: "0 0 56px", overflow: "hidden", borderRadius: "50%" }}
-              >
-                <Image src={restaurantConfig.logo} alt={restaurantConfig.name} width={1536} height={1024} unoptimized style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+              <div className="size-14 shrink-0 overflow-hidden rounded-full border border-brand-accent/65 bg-[#11110F] shadow-lg shadow-brand-accent/10 transition-all duration-500 ease-out group-hover:scale-105 group-hover:border-brand-accent group-hover:shadow-brand-accent/30">
+                <Image src={restaurantConfig.logo} alt={restaurantConfig.name} width={512} height={341} className="h-full w-full object-cover" />
               </div>
               <span className="font-display text-lg font-semibold tracking-tight text-[#F4EFE5] transition-colors duration-300 group-hover:text-brand-accent">
                 {restaurantConfig.name}<span className="ml-1 text-brand-accent">.</span>
@@ -92,16 +89,11 @@ export default function Footer() {
             )}
           </div>
 
-          <section aria-labelledby="footer-hours-title">
+          <section className="min-w-0" aria-labelledby="footer-hours-title">
             <div className="flex flex-wrap items-center gap-2">
               <h2 id="footer-hours-title" className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
                 Opening Hours
               </h2>
-              {restaurantConfig.demoMode && (
-                <span className="rounded-full border border-white/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wider text-white/40">
-                  Sample
-                </span>
-              )}
             </div>
             <ul className="mt-5 space-y-4">
               {restaurantConfig.openingHours.map((hours) => (
@@ -116,7 +108,7 @@ export default function Footer() {
             </ul>
           </section>
 
-          <nav aria-label="Explore" className="lg:col-span-1">
+          <nav aria-label="Explore" className="min-w-0">
             <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
               Explore
             </h2>
@@ -131,7 +123,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Discover" className="lg:col-span-1">
+          <nav aria-label="Discover" className="min-w-0">
             <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
               Discover
             </h2>
@@ -146,16 +138,11 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <section aria-labelledby="footer-contact-title">
+          <section className="min-w-0" aria-labelledby="footer-contact-title">
             <div className="flex flex-wrap items-center gap-2">
               <h2 id="footer-contact-title" className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-accent">
                 Get in Touch
               </h2>
-              {restaurantConfig.demoMode && (
-                <span className="rounded-full border border-white/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wider text-white/40">
-                  Sample details
-                </span>
-              )}
             </div>
             <ul className="mt-5 space-y-4 text-sm text-white/60">
               <li className="flex items-start gap-3">

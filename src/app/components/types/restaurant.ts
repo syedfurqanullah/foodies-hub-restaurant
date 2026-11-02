@@ -18,14 +18,6 @@ export interface RestaurantHours {
   closingTime: string;
 }
 
-export interface RestaurantTheme {
-  primary: string;
-  secondary: string;
-  accent: string;
-  background: string;
-  foreground: string;
-}
-
 export interface RestaurantConfig {
   demoMode: boolean;
   name: string;
@@ -38,5 +30,4 @@ export interface RestaurantConfig {
   deliveryFee?: number | null;
   socialLinks?: RestaurantSocialLinks;
   openingHours: RestaurantHours[];
-  theme: RestaurantTheme;
 }

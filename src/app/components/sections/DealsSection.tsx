@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import Container from "../ui/Container";
 import { deals } from "../data/deals";
 import Reveal from "../ui/Reveal";
+import { formatPrice } from "../utils/formatPrice";
 
 export default function DealsSection() {
   return (
@@ -15,15 +16,15 @@ export default function DealsSection() {
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.25em] text-brand-accent">
-              Sample Offers
+              House Combinations
             </span>
 
             <h2 className="section-heading text-3xl text-[#F4EFE5] sm:text-4xl lg:text-5xl">
-              Deals You <span className="text-brand-accent">Will Love</span>
+              Sample <span className="text-brand-accent">Meal Deals</span>
             </h2>
 
             <p className="mt-4 max-w-lg text-sm leading-7 text-white/60 sm:text-base">
-              Example combos and sample prices for the concept preview; these are not live restaurant offers.
+              Example bundles and prices for this preview.
             </p>
           </div>
 
@@ -41,34 +42,39 @@ export default function DealsSection() {
           {deals.map((deal, index) => (
             <Reveal key={deal.id} delay={index * 0.06}>
             <article
-              data-card-3d
-              className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#211f1a] text-[#F4EFE5] shadow-lg shadow-black/20 transition-all duration-300 hover:border-brand-accent/55"
+              data-card-hover
+              className="group flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#211f1a] text-[#F4EFE5] shadow-lg shadow-black/20 transition-all duration-300 hover:border-brand-accent/55"
             >
               {/* Deal Image */}
-              <div className="relative aspect-[16/9] overflow-hidden">
+              <div className="relative aspect-[16/8] overflow-hidden">
                 <Image
                   src={deal.image}
                   alt={deal.name}
                   fill
-                  unoptimized
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+                <span className="absolute left-3 top-3 rounded-full bg-[#171713]/85 px-3 py-1.5 text-xs font-semibold text-brand-accent backdrop-blur-sm">
+                  {deal.badge}
+                </span>
               </div>
 
               {/* Deal Details */}
-              <div className="flex flex-1 flex-col p-3 sm:p-4">
+              <div className="flex flex-1 flex-col p-3 sm:p-3.5">
                 <h3 className="line-clamp-2 min-h-10 font-display text-sm font-semibold leading-5 text-[#F4EFE5] sm:text-lg">{deal.name}</h3>
-                <p className="mt-1 line-clamp-2 min-h-8 text-[10px] leading-4 text-white/60 sm:mt-2 sm:min-h-9 sm:text-xs sm:leading-5">
+                <p className="mt-1 line-clamp-2 min-h-8 text-xs leading-5 text-white/60 sm:mt-2 sm:min-h-9 sm:text-sm">
                   {deal.description}
                 </p>
-                <p className="mt-1 line-clamp-2 min-h-8 text-[8px] leading-4 text-white/40 sm:mt-2 sm:text-[10px]">{deal.terms}</p>
+                <p className="mt-1 line-clamp-2 min-h-8 text-[11px] leading-5 text-white/50 sm:mt-2 sm:text-xs">{deal.terms}</p>
 
                 <div className="mt-auto flex flex-col items-stretch gap-2 border-t border-white/10 pt-2.5 sm:flex-row sm:items-end sm:justify-between sm:pt-3">
                   <div>
-                    <span className="block text-[9px] font-semibold uppercase tracking-wider text-white/40 sm:text-[10px]">Sample price · PKR</span>
-                    <span className="text-[10px] text-white/40 line-through sm:text-xs">Rs. {deal.originalPrice.toLocaleString("en-PK")}</span>
-                    <p className="text-base font-bold text-brand-accent sm:text-lg">Rs. {deal.discountedPrice.toLocaleString("en-PK")}</p>
+                    <span className="block text-xs font-semibold uppercase tracking-wider text-white/55">Sample price · PKR</span>
+                    <span className="text-xs text-white/50 line-through sm:text-sm">{formatPrice(deal.originalPrice)}</span>
+                    <p className="flex items-center gap-2 text-base font-bold text-brand-accent sm:text-lg">
+                      {formatPrice(deal.discountedPrice)}
+                      <span className="rounded bg-brand-accent/10 px-1.5 py-0.5 text-[10px] font-semibold">{deal.discount}</span>
+                    </p>
                   </div>
                   <Link
                     href={`/deals?deal=${deal.id}`}

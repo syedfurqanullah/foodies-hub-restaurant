@@ -44,40 +44,58 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = "foodies-hub-cart";
 
+function isCartItem(value: unknown): value is CartItem {
+  if (!value || typeof value !== "object") return false;
+
+  const item = value as Partial<CartItem>;
+  return (
+    typeof item.id === "string" &&
+    typeof item.name === "string" &&
+    typeof item.description === "string" &&
+    typeof item.image === "string" &&
+    typeof item.category === "string" &&
+    typeof item.price === "number" &&
+    Number.isFinite(item.price) &&
+    item.price >= 0 &&
+    typeof item.quantity === "number" &&
+    Number.isInteger(item.quantity) &&
+    item.quantity > 0
+  );
+}
+
+function readSavedCart(): CartItem[] {
+  try {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    if (!savedCart) return [];
+
+    const parsedCart: unknown = JSON.parse(savedCart);
+    return Array.isArray(parsedCart) ? parsedCart.filter(isCartItem) : [];
+  } catch {
+    return [];
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartReady, setIsCartReady] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
   const [isCartPreviewOpen, setIsCartPreviewOpen] = useState(false);
 
-  // Load saved cart from localStorage
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-
-      if (savedCart) {
-        const parsedCart: CartItem[] = JSON.parse(savedCart);
-
-        if (Array.isArray(parsedCart)) {
-          // eslint-disable-next-line react-hooks/set-state-in-effect
-          setCartItems(parsedCart);
-        }
-      }
-    } catch {
-      localStorage.removeItem(CART_STORAGE_KEY);
-    } finally {
-      setIsCartReady(true);
-    }
+    // Load client storage after hydration so the server and first render stay in sync.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCartItems(readSavedCart());
+    setIsCartReady(true);
   }, []);
 
-  // Save cart whenever its contents change
   useEffect(() => {
     if (!isCartReady) return;
 
-    localStorage.setItem(
-      CART_STORAGE_KEY,
-      JSON.stringify(cartItems)
-    );
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    } catch {
+      // Keep cart interactions available when browser storage is disabled or full.
+    }
   }, [cartItems, isCartReady]);
 
   const addToCart = (product: CartProductInput) => {

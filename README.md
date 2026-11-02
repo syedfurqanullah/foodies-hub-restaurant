@@ -1,13 +1,13 @@
 # Foodies Hub Restaurant Website
 
-A responsive restaurant website concept built with Next.js, React, TypeScript, Tailwind CSS, and Framer Motion. It includes restaurant pages, a sample menu, deals, a gallery, cart controls, and a WhatsApp order preview.
+A responsive restaurant website concept built with Next.js, React, TypeScript, and Tailwind CSS. It includes restaurant pages, a sample menu, deals, a gallery, and an interactive cart preview.
 
 ## Features
 
 - Responsive home, menu, deals, about, gallery, contact, and cart pages
 - Menu search, category filters, and item links
 - Cart quantity controls with browser storage
-- WhatsApp order preview for the sample checkout flow
+- Local order preview for the sample checkout flow; no order is sent or stored
 - Page metadata, social preview images, sitemap, and robots rules
 - Subtle card motion with reduced-motion support
 
@@ -24,7 +24,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Demo Mode
 
-The project starts with `demoMode: true`. The restaurant details, menu, prices, deals, photos, and reviews are sample content. The cart is stored in the visitor's browser. Checkout opens a sample WhatsApp draft; it does not send an order to a restaurant. The contact form opens an email draft and does not send data to a server.
+The project starts with `demoMode: true`. The restaurant details, menu, prices, deals, photos, and reviews are sample content. The cart is stored in the visitor's browser. Checkout shows a local order preview; it does not send an order or store customer details. Reservation and contact forms also show a preview and do not send data to a server.
 
 ## Customize for a Restaurant
 
@@ -62,5 +62,10 @@ This project is currently a frontend demo. It does not include an order database
 - `src/app/` - pages, metadata, sitemap, robots rules, and global styles
 - `src/app/components/config/` - restaurant and WhatsApp settings
 - `src/app/components/data/` - sample dishes, deals, gallery images, and reviews
-- `src/app/components/layout/` - shared navigation, footer, and cart components
+- `src/app/components/layout/` - navigation, footer, and cart feedback
+- `src/app/components/sections/` - homepage sections and reservation preview
+- `src/app/components/ui/` - reusable interface components and motion
+- `src/app/components/context/` - shared cart state
+- `src/app/components/types/` - shared TypeScript models
+- `src/app/components/utils/` - formatting and other shared helpers
 - `public/images/` - demo photos and social preview image

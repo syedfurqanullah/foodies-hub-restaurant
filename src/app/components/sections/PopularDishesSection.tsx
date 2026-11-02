@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import Container from "../ui/Container";
 import { popularDishes } from "../data/popularDishes";
 import Reveal from "../ui/Reveal";
+import { formatPrice } from "../utils/formatPrice";
 
 export default function PopularDishesSection() {
   const featuredIds = ["ember-house-burger", "charred-garden-pizza", "pesto-farfalle", "smoky-grill-platter"];
@@ -19,7 +20,7 @@ export default function PopularDishesSection() {
         {/* Section Heading */}
         <div className="mb-10 text-center lg:mb-12">
           <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.25em] text-brand-accent">
-          Signature Plates · Demo Menu
+          Signature Plates
           </span>
 
           <h2 className="section-heading text-3xl text-[#F4EFE5] sm:text-4xl lg:text-5xl">
@@ -27,7 +28,7 @@ export default function PopularDishesSection() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/60 sm:text-base">
-            Flame-grilled favorites and comfort food from our sample menu. Dish names, photos, and prices are illustrative.
+            A few dishes from the sample menu. Browse the full menu for more options.
           </p>
         </div>
 
@@ -36,7 +37,7 @@ export default function PopularDishesSection() {
           {featuredDishes.map((dish, index) => (
             <Reveal key={dish.id} delay={index * 0.06}>
             <article
-              data-card-3d
+              data-card-hover
               className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#1B1916] transition-all duration-300 hover:border-brand-accent/50"
             >
               {/* Dish Image */}
@@ -45,7 +46,7 @@ export default function PopularDishesSection() {
                   src={dish.image}
                   alt={dish.name}
                   fill
-                  sizes="(max-width: 379px) 100vw, (max-width: 1279px) 50vw, 25vw"
+                  sizes="(max-width: 379px) 100vw, (max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
@@ -69,7 +70,7 @@ export default function PopularDishesSection() {
 
                 <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/10 pt-3">
                   <span className="text-sm font-bold text-brand-accent sm:text-base">
-                    Rs. {dish.price.toLocaleString("en-PK")}
+                    {formatPrice(dish.price)}
                   </span>
 
                   <Link

@@ -22,7 +22,7 @@ export default function HomeDetailsSection() {
           <Reveal className="flex items-start gap-3">
             <Clock3 size={19} className="mt-0.5 shrink-0 text-brand-accent" />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Opening Hours / Sample</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Opening Hours</p>
               <p className="mt-1 text-sm leading-6 text-[#F4EFE5]">{hours}</p>
             </div>
           </Reveal>
@@ -30,7 +30,7 @@ export default function HomeDetailsSection() {
           <Reveal className="flex items-start gap-3" delay={0.06}>
             <MapPin size={19} className="mt-0.5 shrink-0 text-brand-accent" />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Location / Sample</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Location</p>
               <p className="mt-1 text-sm leading-6 text-[#F4EFE5]">{location}</p>
             </div>
           </Reveal>

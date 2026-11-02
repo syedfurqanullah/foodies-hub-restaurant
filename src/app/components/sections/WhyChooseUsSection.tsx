@@ -12,25 +12,25 @@ const features = [
   {
     title: "Fresh Ingredients",
     description:
-      "We use carefully selected ingredients to bring freshness to every meal.",
+      "A menu of familiar flavors, prepared to order.",
     icon: Leaf,
   },
   {
     title: "Thoughtful Preparation",
     description:
-      "A considered approach to preparation, flavor, and presentation.",
+      "Straightforward dishes with care given to each plate.",
     icon: ChefHat,
   },
   {
     title: "Easy Ordering",
     description:
-      "A clear, convenient path from browsing the menu to placing an order.",
+      "Browse the menu, add dishes to your cart, and review an order preview.",
     icon: Clock,
   },
   {
     title: "Made for Sharing",
     description:
-      "A welcoming menu concept for everyday meals and time together.",
+      "Choose a platter for the table or order a dish for yourself.",
     icon: Heart,
   },
 ];
@@ -41,16 +41,15 @@ export default function WhyChooseUsSection() {
       <Container>
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.22em] text-[#B89A62]">
-            Sample experience pillars
+            What to Expect
           </span>
 
           <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl">
-            Good Food, Made with Care
+            A Menu for the Whole Table
           </h2>
 
           <p className="mt-5 text-sm leading-7 text-[#A8A29A] sm:text-base">
-            Example brand messaging for this restaurant concept, ready to tailor
-            around the restaurant&apos;s verified strengths and service.
+            Burgers, pizza, pasta, and grill plates, with sample prices for this preview.
           </p>
         </div>
 
@@ -61,7 +60,7 @@ export default function WhyChooseUsSection() {
             return (
               <Reveal key={feature.title} delay={index * 0.05}>
                 <div
-                  data-card-3d
+                  data-card-hover
                   className="group relative h-full overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.045] to-white/[0.015] p-5 transition-all duration-300 hover:border-[#B89A62]/45 sm:p-6"
                 >
                   <div className="mb-5 flex items-center justify-between">

@@ -6,6 +6,7 @@ import "./globals.css";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import CartAddedPanel from "./components/layout/CartAddedPanel";
+import SiteMotion from "./components/ui/SiteMotion";
 import { CartProvider } from "./components/context/CartContext";
 import { restaurantConfig } from "./components/config/restaurant";
 import { deploymentSiteUrl, publicSiteUrl } from "./seo";
@@ -59,10 +60,7 @@ export const metadata: Metadata = {
   description: restaurantConfig.description,
   applicationName: restaurantConfig.name,
   icons: {
-    icon: [
-      { url: "/icons/foodies-hub-favicon.ico", type: "image/x-icon" },
-      { url: "/logo/foodies-hub-icon.png", type: "image/png", sizes: "256x256" },
-    ],
+    icon: { url: "/logo/foodies-hub-icon.png", type: "image/png", sizes: "256x256" },
     apple: "/logo/foodies-hub-icon.png",
   },
   openGraph: {
@@ -104,7 +102,7 @@ export default function RootLayout({
             />
           )}
           <Navbar />
-          {children}
+          <SiteMotion>{children}</SiteMotion>
           <CartAddedPanel />
           <Footer />
         </CartProvider>

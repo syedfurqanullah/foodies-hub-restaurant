@@ -23,8 +23,7 @@ export default function CategoriesSection() {
             </h2>
 
             <p className="mt-4 max-w-lg text-sm leading-7 text-white/60 sm:text-base">
-              From delicious starters to satisfying meals, discover something
-              special for every craving.
+              Choose a category to browse the menu.
             </p>
           </div>
 
@@ -44,7 +43,7 @@ export default function CategoriesSection() {
             <Reveal key={category.id} delay={index * 0.05}>
             <Link
               href={category.href}
-              className="group relative isolate block aspect-[4/3] h-full overflow-hidden rounded-xl border border-white/10 bg-[#25221E]"
+              className="group relative isolate block aspect-[5/4] h-full overflow-hidden rounded-lg border border-white/10 bg-[#25221E]"
             >
               {/* Category Image */}
               <Image

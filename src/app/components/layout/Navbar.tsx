@@ -15,15 +15,7 @@ import {
 
 import { useCart } from "../context/CartContext";
 import Container from "../ui/Container";
-
-const navigationLinks = [
-  { label: "Home", href: "/" },
-  { label: "Menu", href: "/menu" },
-  { label: "Deals", href: "/deals" },
-  { label: "About", href: "/about" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Contact", href: "/contact" },
-];
+import { navigationLinks } from "../config/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,25 +49,21 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#171713]/95 text-white backdrop-blur-xl">
       <Container size="wide">
-        <div className="flex h-20 items-center justify-between gap-3 sm:gap-5">
+        <div className="flex h-16 items-center justify-between gap-3 sm:h-[4.5rem] sm:gap-5">
 
           {/* Logo */}
           <Link
             href="/"
             className="group flex shrink-0 items-center gap-2"
           >
-            <div
-              className="shrink-0 overflow-hidden rounded-full border border-brand-accent/65 bg-[#11110F] shadow-lg shadow-brand-accent/10 transition-all duration-300 ease-out group-hover:scale-110 group-hover:-rotate-3 group-hover:border-brand-accent group-hover:shadow-brand-accent/30"
-              style={{ width: 56, height: 56, flex: "0 0 56px", overflow: "hidden", borderRadius: "50%" }}
-            >
+            <div className="size-[46px] shrink-0 overflow-hidden rounded-full border border-brand-accent/65 bg-[#11110F] shadow-lg shadow-brand-accent/10 transition-all duration-300 ease-out group-hover:scale-105 group-hover:border-brand-accent group-hover:shadow-brand-accent/30">
               <Image
-                src="/logo/foodies-hub-logo.png?v=2"
+                src="/logo/foodies-hub-logo.webp"
                 alt="Foodies Hub"
-                width={1536}
-                height={1024}
+                width={512}
+                height={341}
                 priority
-                unoptimized
-                style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                className="h-full w-full object-cover"
               />
             </div>
             <span className="whitespace-nowrap text-sm font-semibold tracking-tight text-[#F4EFE5] transition-colors duration-300 group-hover:text-brand-accent sm:text-base">
@@ -150,7 +138,7 @@ export default function Navbar() {
               href="/menu?focus=search"
               onClick={focusMenuSearch}
               aria-label="Search menu"
-              className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 transition-colors duration-300 hover:text-brand-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-xl text-white/80 transition-colors duration-300 hover:text-brand-accent max-[380px]:hidden"
             >
               <Search size={21} />
             </Link>
@@ -202,7 +190,7 @@ export default function Navbar() {
                   style={{
                     animationDelay: `${index * 60}ms`,
                   }}
-                  className="animate-[fadeIn_0.3s_ease-out_both] text-sm font-medium text-white/75 transition-all duration-300 hover:translate-x-2 hover:text-brand-accent"
+                  className="animate-[mobile-nav-link-in_0.26s_ease-out_both] text-sm font-medium text-white/75 transition-all duration-300 hover:translate-x-2 hover:text-brand-accent"
                 >
                   {link.label}
                 </Link>

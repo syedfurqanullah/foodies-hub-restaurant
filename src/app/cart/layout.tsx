@@ -2,7 +2,7 @@ import { pageMetadata } from "../seo";
 
 export const metadata = pageMetadata(
   "Your Cart",
-  "Preview a sample Foodies Hub order and prepare a WhatsApp draft. No live order is submitted.",
+  "Review a sample Foodies Hub order in a local preview. No order is sent or stored.",
   "/cart",
   true,
 );

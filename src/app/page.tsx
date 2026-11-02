@@ -11,20 +11,16 @@ import HomeGallerySection from "./components/sections/HomeGallerySection";
 
 export default function Home() {
   return (
-    <>
-      <main>
-        <HeroSection />
-        <HomeDetailsSection />
-        <PopularDishesSection />
-        <CategoriesSection />
-        <DealsSection />
-        <WhyChooseUsSection />
-        <HomeGallerySection />
-        <TestimonialsSection />
-        <WhatsAppButton />
-     
-
-      </main>
-    </>
+    <main>
+      <HeroSection />
+      <HomeDetailsSection />
+      <PopularDishesSection />
+      <CategoriesSection />
+      <DealsSection />
+      <WhyChooseUsSection />
+      <HomeGallerySection />
+      <TestimonialsSection />
+      <WhatsAppButton />
+    </main>
   );
 }
