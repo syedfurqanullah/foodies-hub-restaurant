@@ -4,7 +4,7 @@ A modern, responsive restaurant website demo built with **Next.js, React, TypeSc
 
 ## Live Demo
 
-[View Live Website](https://foodies-hub-restaurant.vercel.app/)
+[View Foodies Hub Restaurant](https://foodies-hub-restaurant.vercel.app/)
 
 ## Features
 
