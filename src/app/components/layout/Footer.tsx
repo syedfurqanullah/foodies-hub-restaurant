@@ -12,7 +12,7 @@ const exploreLinks = [
 ];
 
 const discoverLinks = [
-  { label: "Our Story", href: "/about" },
+  { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
 ];
