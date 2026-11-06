@@ -6,6 +6,24 @@ A modern, responsive restaurant website demo built with **Next.js, React, TypeSc
 
 [View Foodies Hub Restaurant](https://foodies-hub-restaurant.vercel.app/)
 
+## 📸 Screenshots
+
+### Home Page
+
+![FoodiesHub Home](./public/scrreenshots/home.png)
+
+### Menu Page
+
+![ Foodies Hub Menu](./public/scrreenshots/menu.png)
+
+### Deals Page
+
+![Foodies Hub Deals](./public/scrreenshots/deals.png)
+
+### Responsive Design
+
+![Foddies Hub Responsive](.//public/scrreenshots/responsive.png)
+
 ## Features
 
 - **Responsive Design** — Optimized for desktop, tablet, and mobile devices.
