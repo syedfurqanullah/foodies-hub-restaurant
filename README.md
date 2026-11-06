@@ -112,6 +112,9 @@ src/
 
 public/
 └── images/
+└── logo/
+└── screenshots/
+
 ```
 
 ## Demo Notice
